@@ -1,0 +1,23 @@
+{
+  "id": "SPIKE-002",
+  "title": "Tenuta al riavvio e agli aggiornamenti dell'app Terminal",
+  "version": "v0.1.0",
+  "epic": "EPIC-002",
+  "module": "MOD-002",
+  "type": "Spike",
+  "priority": "P0",
+  "status": "Todo",
+  "dependencies": [],
+  "requirements": [
+    "REQ-NFR-002"
+  ],
+  "design_references": [
+    "design/session"
+  ],
+  "description": "Verificare che la sostituzione di Weston con Hyprland regga al riavvio della VM e capire cosa l'app Terminal riscrive quando si aggiorna.",
+  "acceptance_criteria": [
+    "Il report docs/spikes/SPIKE-002-avvio-aggiornamenti.md documenta l'esito di almeno un riavvio completo della VM con l'override attivo.",
+    "Il report elenca i file che l'app Terminal crea o riscrive nella VM e quando, con le fonti.",
+    "Il report indica i rischi residui per l'override in ~/.config/systemd/user e una raccomandazione per US-001."
+  ]
+}
