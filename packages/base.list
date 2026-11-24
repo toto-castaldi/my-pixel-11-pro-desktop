@@ -1,0 +1,3 @@
+# Pacchetti Debian trixie installati da install.sh, uno per riga.
+# I pacchetti da trixie-backports vanno in un file *.backports.list.
+# Gli item successivi aggiungono qui i pacchetti del desktop.

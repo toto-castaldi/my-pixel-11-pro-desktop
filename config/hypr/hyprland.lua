@@ -1,0 +1,3 @@
+-- Hyprland 0.55 configuration (Lua, hl.* API).
+-- Minimal placeholder created by TEC-002 so that the quality gate can
+-- verify it; the desktop configuration is added by US-003 and later items.
