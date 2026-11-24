@@ -1,0 +1,27 @@
+{
+  "id": "US-003",
+  "title": "Desktop base: barra, launcher, terminale, tastiera e scorciatoie",
+  "version": "v0.1.0",
+  "epic": "EPIC-003",
+  "module": "MOD-003",
+  "type": "User Story",
+  "priority": "P1",
+  "status": "Todo",
+  "dependencies": [
+    "US-001",
+    "SPIKE-001"
+  ],
+  "requirements": [
+    "REQ-DSK-001"
+  ],
+  "design_references": [
+    "design/desktop"
+  ],
+  "description": "Come utente, voglio un desktop Hyprland utilizzabile subito: barra, launcher, terminale, tastiera italiana e scorciatoie che funzionano su Android.",
+  "acceptance_criteria": [
+    "config/hypr/hyprland.lua, config/waybar/, config/foot/ e config/fuzzel/ sono collegati da install.sh e Hyprland --verify-config non segnala errori.",
+    "All'avvio della sessione waybar è visibile e mostra workspace e ora.",
+    "Le scorciatoie documentate nel README aprono terminale e launcher, chiudono la finestra, cambiano workspace ed escono, usando il modificatore raccomandato da SPIKE-001.",
+    "Il layout di tastiera attivo è it (verificato con hyprctl devices)."
+  ]
+}
