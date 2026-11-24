@@ -1,0 +1,5 @@
+{
+  "id": "EPIC-002",
+  "title": "Sessione grafica",
+  "scope": "Avvio del compositor sul display dell'app Terminal Android, sostituzione di Weston, ritorno a Weston e comportamento dell'input."
+}
