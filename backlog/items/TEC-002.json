@@ -6,7 +6,7 @@
   "module": "MOD-001",
   "type": "Task",
   "priority": "P0",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "task/TEC-002-scaffold-repository-quality-gate",
   "dependencies": [],
   "requirements": [
@@ -25,5 +25,7 @@
     "Almeno un test bats copre una funzione pura di lib/ senza accedere a filesystem, rete o systemd.",
     ".gitignore esclude chiavi, token e backup locali; nessun segreto è versionato.",
     "Il README documenta preparazione e quality gate."
-  ]
+  ],
+  "outcome": "Creati install.sh (--help stampa l'uso senza modificare il sistema; argomento sconosciuto esce con 2), lib/core.sh (funzioni pure) e lib/effects.sh (apt e filesystem), packages/base.list, config/links.list, config/hypr/hyprland.lua (segnaposto), systemd/, tests/core.bats (14 test sulle funzioni pure, senza filesystem, rete o systemd) e scripts/gate.sh che esegue in un solo comando shellcheck, Hyprland --verify-config e bats. .gitignore esclude chiavi (id_*, *.pem, *.key), .env e backup (*.bak-*); nessun segreto versionato. README documenta struttura, preparazione e quality gate. Verifiche: sull'host di sviluppo shellcheck pulito e bats 14/14; in una HOME temporanea il collegamento dei dotfile crea backup e link e alla seconda esecuzione non cambia nulla. Sulla VM (utente droid, verifica dell'utente): ./scripts/gate.sh superato per intero (Hyprland --verify-config 'config ok', bats 14 test 0 errori, 'Quality gate superato.'); ./install.sh eseguito due volte, entrambe 'Nessuna modifica': atteso per lo scaffold, perché gli elenchi di pacchetti e dotfile sono ancora vuoti e li riempiono gli item successivi; file di REQ-NFR-002 (activate_display.sh, enable_display, enable_gfxstream, weston.service, weston.socket) invariati secondo sha256sum prima e dopo.",
+  "closed_at": "2026-11-24"
 }
