@@ -5,7 +5,8 @@
   "epic": "EPIC-001",
   "type": "Task",
   "priority": "P0",
-  "status": "Todo",
+  "status": "Done",
+  "branch": "task/TEC-001-kickoff",
   "dependencies": [],
   "design_references": [
     "PROCESS §3",
@@ -30,5 +31,7 @@
     "The backlog contains the goal of v0.1.0, its epics and its items with dependencies, requirements and acceptance criteria; ideas outside v0.1.0 are recorded as unassigned ideas.",
     "`README.md` presents the project instead of the template; `CHANGELOG.md` and `.gitignore` are adapted to the project.",
     "`backlog check` passes."
-  ]
+  ],
+  "outcome": "Kickoff completato con l'utente. AGENTS.md compilato (italiano/inglese, stack Bash+Lua, gate shellcheck/verify-config/bats, shared claims e parallel work on). Requisiti baseline: REQ-SES-001/002, REQ-DSK-001/002/003, REQ-INS-001, REQ-NFR-001/002/003, glossario e accettazione v0.1.0. Design: decisioni iniziali, 4 decisioni aperte chiuse dalle spike, topic context/configuration/install/session/desktop/invariants/security/test-strategy/modules (MOD-001..003); rimossi data-model e integrations. Backlog: 4 epic, 12 item su main. Gate non eseguibile: i comandi li crea TEC-002.",
+  "closed_at": "2026-11-24"
 }

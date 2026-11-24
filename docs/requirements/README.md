@@ -1,8 +1,8 @@
-# Requirements — `<project-name>`
+# Requirements — my-pixel-11-pro-desktop
 
 **Target version:** v0.1.0
 
-**State:** `<draft | baseline>`
+**State:** baseline
 
 The *what* of the project, one file per requirement (`docs/process/docs.md` §1). The *how* is in `docs/design/`. Every change of scope or behavior is recorded here before updating backlog and implementation (`docs/PROCESS.md` §3, `docs/process/docs.md`). List the requirements with `python3 .agents/tools/backlog.py docs`; read only the files you need.
 
@@ -15,23 +15,31 @@ The *what* of the project, one file per requirement (`docs/process/docs.md` §1)
 
 ## Goal
 
-`<What problem the project solves, for whom, and what success looks like for v0.1.0.>`
+Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile). La v0.1.0 è riuscita quando, su una VM appena reimpostata, un clone del repository e `install.sh` bastano per avere sul display del Terminal un desktop Hyprland accelerato dalla GPU, con barra, launcher, terminale, sfondo, blocco schermo, notifiche, screenshot, cronologia della clipboard e volume.
 
 ## Actors
 
-- **`<Actor>`:** `<who they are, what they can do>`
+- **Utente:** il proprietario del telefono. Usa la VM come utente `droid` con `sudo`, apre il display grafico dall'app Terminal, esegue `install.sh` e usa il desktop.
 
 ## Scope
 
 ### In scope for v0.1.0
 
-- `<capability>`
+- Hyprland come compositor del display del Terminal al posto di Weston, con accelerazione GPU, e ritorno a Weston con un comando.
+- Desktop base: waybar, fuzzel, foot, tastiera italiana, scorciatoie compatibili con l'input di Android.
+- Sfondo (hyprpaper), blocco schermo (hyprlock), notifiche (mako).
+- Screenshot (grim, slurp), cronologia della clipboard, controllo del volume.
+- `install.sh` rieseguibile che installa i pacchetti, collega i dotfile con link simbolici e fa backup di ciò che sostituisce.
 
 ### Out of scope for v0.1.0
 
 Do not introduce these without first updating the requirements and the backlog:
 
-- `<excluded capability>`
+- Condivisione della clipboard tra la VM e Android (solo indagata da una spike).
+- Tema grafico coordinato tra le applicazioni.
+- Applicazioni desktop aggiuntive (browser, file manager, editor) e ambienti di sviluppo.
+- Profili di schermo diversi per telefono e monitor esterno.
+- Modifiche ai file di sistema gestiti dall'app Terminal.
 
 ## Areas
 
@@ -39,5 +47,7 @@ Functional requirement IDs: `REQ-<AREA>-NNN`; non-functional: `REQ-NFR-NNN`. Are
 
 | Area | Meaning |
 | ---- | ------- |
-| `<AREA>` | `<functional area>` |
+| `SES` | sessione grafica: compositor sul display del Terminal e ritorno a Weston |
+| `DSK` | desktop: applicazioni e configurazione della sessione Hyprland |
+| `INS` | installazione: script, pacchetti, dotfile e backup |
 | `NFR` | non-functional requirements |

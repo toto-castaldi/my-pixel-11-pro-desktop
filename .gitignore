@@ -22,3 +22,9 @@ Thumbs.db
 .vscode/
 
 # Stack-specific ignores are added during the kickoff
+
+# Project: SSH keys and backups created by install.sh
+id_*
+*.pem
+*.key
+*.bak-*

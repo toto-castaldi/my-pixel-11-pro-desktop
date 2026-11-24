@@ -1,5 +1,5 @@
 {
   "id": "v0.1.0",
-  "goal": "<one or two sentences describing what v0.1.0 delivers; defined during the kickoff>",
+  "goal": "Desktop Hyprland accelerato dalla GPU sul display dell'app Terminal, con barra, launcher, terminale, sfondo, blocco schermo, notifiche, screenshot, clipboard e volume, riproducibile da una VM pulita con install.sh.",
   "state": "Open"
 }
