@@ -1,3 +1,3 @@
 # Notes
 
-- Project created from `agile-project-template`; run the `kickoff` skill to start.
+- Lavoro in parallelo: i worker condividono la stessa VM e la stessa $HOME; le prove di integrazione di install.sh e sul display vanno eseguite un item alla volta.

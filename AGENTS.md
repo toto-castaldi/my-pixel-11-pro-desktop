@@ -1,7 +1,5 @@
 # AGENTS.md
 
-> **Template not initialized.** This project was created from `agile-project-template` and has not been kicked off yet. The only item that may be started is `TEC-001 — Kickoff` (run the `kickoff` skill); its initial backlog planning takes place on `main` before starting the item branch. Remove this notice during the kickoff.
-
 ## 0. Process
 
 This project follows the shared process in [`docs/PROCESS.md`](docs/PROCESS.md). Read it before doing any work; it says which files of `docs/process/` to read for each topic.
@@ -12,61 +10,67 @@ At the start of every session run `python3 .agents/tools/backlog.py status`, the
 
 ## 1. Project
 
-- **Name:** `<project-name>`
-- **Summary:** `<one or two sentences: what the project does and for whom>`
+- **Name:** `my-pixel-11-pro-desktop`
+- **Summary:** trasforma la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile).
 - **Current version:** see `python3 .agents/tools/backlog.py status`.
 - **Requirements:** `docs/requirements/` · **Design:** `docs/design/` (one file each, list them with `python3 .agents/tools/backlog.py docs`; read only those you need)
 
 ## 2. Language
 
-- **Project language:** `<e.g. Italian>`
-- Project content (`docs/PROCESS.md` §2) and user-facing messages are written in the project language.
-- Code identifiers and code comments: `<e.g. English>`.
+- **Project language:** Italian
+- Project content (`docs/PROCESS.md` §2) and user-facing messages, including the output of `install.sh`, are written in the project language.
+- Code identifiers and code comments: English.
 
 ## 3. Scope
 
 The scope of the current version is defined in `docs/requirements/README.md`. Do not implement anything listed there as out of scope without first updating requirements and backlog and agreeing the scope change with the user.
 
-`<Optional: two or three bullets with the most important scope boundaries the agent must keep in mind.>`
+- The target is only the VM of the Android Terminal app (Debian 13 trixie, aarch64, user `droid`); no other distributions or machines.
+- Never modify the files managed by the Terminal app (`docs/requirements/REQ-NFR-002.md`): everything lives under `$HOME` or comes from Debian packages.
 
 ## 4. Stack and architecture
 
 Unless a different decision is recorded in the backlog and in the technical design:
 
-- `<language, runtime and version>`
-- `<package manager>`
-- `<frameworks and main libraries>`
-- `<database / storage>`
-- `<test framework>`
-- `<local runtime, e.g. Docker Compose>`
+- Bash for `install.sh` and `lib/*.sh`; Lua for the Hyprland configuration (API `hl.*` of Hyprland 0.55)
+- apt (Debian trixie and `trixie-backports`)
+- Hyprland 0.55, waybar, fuzzel, foot, hyprpaper, hyprlock, mako, grim, slurp, cliphist
+- no database; state is the files under `$HOME`
+- shellcheck, bats
+- the Terminal app VM itself, user-level systemd units
 
-Architecture and module boundaries: `<short description, details in docs/design/<topic>.md>`.
+Architecture and module boundaries: three modules (`docs/design/modules.md`): INSTALL (`install.sh`, `lib/`, `packages/`), SESSION (`systemd/`), DESKTOP (`config/`). `install.sh` keeps pure functions (paths, lists, decisions) separate from side effects (apt, filesystem, systemd) so that the pure ones are unit-testable.
 
 ## 5. Domain rules
 
-`<Invariants and business rules the agent must never violate, grouped by topic. Keep them short; the full specification is in docs/requirements/.>`
+- `install.sh` is idempotent: a second run changes nothing and creates no backups.
+- A user file is never replaced without a backup.
+- Returning to Weston must always remain possible by removing the override; Weston is never uninstalled.
+- Dotfiles are applied as symbolic links into the repository, never as copies.
+- `sudo` is used only for apt.
 
 ## 6. Quality gate
 
-Closing gate (`docs/PROCESS.md` §6):
+Closing gate (`docs/PROCESS.md` §6), all run by `./scripts/gate.sh` (created by TEC-002):
 
 ```bash
-<lint command>
-<typecheck command>
-<in-memory unit test command>
-<build command>
+shellcheck install.sh lib/*.sh scripts/*.sh
+Hyprland --verify-config -c config/hypr/hyprland.lua
+bats tests/
+# no build step
 ```
 
-Preparation: `<install command>`.
+Preparation: `sudo apt-get install -y shellcheck bats` and Hyprland from `trixie-backports` (`sudo apt-get install -y -t trixie-backports hyprland`).
 
-Integration and end-to-end suites: `<commands, prerequisites, and any rule such as "do not mock the database to claim constraints are verified">`.
+Integration and end-to-end suites: there is no automated suite. Integration is running `./install.sh` on the VM and checking the item's criteria; end-to-end is the procedure of `docs/requirements/acceptance.md` on a freshly reset VM with the display open. Both need the Terminal app VM; report their results in the item's `outcome`. Do not claim a criterion about the display, input or reboot as verified without having observed it on the VM.
 
 ## 7. Definition of Done additions
 
 In addition to `docs/PROCESS.md` §6:
 
-- `<e.g. migrations are reproducible from a clean environment and verified during the item against a real database>`
-- `<e.g. .env.example is updated when configuration changes>`
+- `./install.sh` run twice on the VM: the second run reports no changes.
+- The files listed in REQ-NFR-002 are unchanged after the item's work.
+- The README documents every new command, shortcut and folder the item introduces.
 
 ## 8. Process overrides
 
@@ -74,15 +78,15 @@ None.
 
 ## 9. Security and configuration
 
-- Never commit secrets. Local configuration lives in `<e.g. .env>`, with a committed `<e.g. .env.example>` containing no real secrets.
+- Never commit secrets: SSH keys, tokens, passwords. The GitHub SSH key lives only in `~/.ssh/` of the VM.
+- Local configuration is the environment written by the Terminal app (`~/weston.env`), never versioned; the project reads it and does not change it.
 - Do not log tokens, credentials or sensitive personal data.
-- `<project-specific security rules>`
 
 ## 10. Parallel work
 
 Settings of `docs/PROCESS-PARALLEL.md`, which explains them; read it before working on an item if `Shared claims` or `Parallel work` is `on`.
 
-- **Shared claims:** `<on | off>`
-- **Parallel work:** `<on | off>`
-- **Workspace root:** `../<repo-name>-work`
-- **Worker agent command:** `pi --approve`
+- **Shared claims:** on
+- **Parallel work:** on
+- **Workspace root:** `../my-pixel-11-pro-desktop-work`
+- **Worker agent command:** `pi --approve` (not used: the orchestrator runs in Claude Code)
