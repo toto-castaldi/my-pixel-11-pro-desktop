@@ -1,0 +1,25 @@
+{
+  "id": "US-002",
+  "title": "Ritorno a Weston con un comando",
+  "version": "v0.1.0",
+  "epic": "EPIC-002",
+  "module": "MOD-002",
+  "type": "User Story",
+  "priority": "P1",
+  "status": "Todo",
+  "dependencies": [
+    "US-001"
+  ],
+  "requirements": [
+    "REQ-SES-002"
+  ],
+  "design_references": [
+    "design/session"
+  ],
+  "description": "Come utente, voglio poter tornare alla sessione Weston originale, per recuperare il display se Hyprland ha problemi.",
+  "acceptance_criteria": [
+    "Un comando documentato nel README (es. install.sh --session weston) rimuove l'override e riattiva weston.socket.",
+    "Dopo il comando e la riapertura del display, Weston è di nuovo il compositor; il comando inverso riporta Hyprland.",
+    "Il comando è idempotente: eseguito due volte di seguito non produce errori né modifiche."
+  ]
+}
