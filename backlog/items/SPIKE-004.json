@@ -1,0 +1,20 @@
+{
+  "id": "SPIKE-004",
+  "title": "Clipboard condivisa tra Hyprland e Android",
+  "version": "v0.1.0",
+  "epic": "EPIC-003",
+  "module": "MOD-003",
+  "type": "Spike",
+  "priority": "P2",
+  "status": "Todo",
+  "dependencies": [],
+  "design_references": [
+    "design/desktop"
+  ],
+  "description": "Capire se e come si può condividere la clipboard tra la sessione Wayland della VM e Android. La condivisione non è nello scope della v0.1.0: l'esito può diventare un item futuro.",
+  "acceptance_criteria": [
+    "Il report docs/spikes/SPIKE-004-clipboard-android.md dice se l'app Terminal offre un canale per la clipboard (ttyd, vsock, agente della VM) e con quali prove.",
+    "Il report elenca le alternative praticabili (es. cartella condivisa, OSC 52) con pro e contro.",
+    "Se esiste una soluzione praticabile, il report propone l'idea da registrare nel backlog per una versione futura."
+  ]
+}
