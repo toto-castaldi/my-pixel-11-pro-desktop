@@ -1,0 +1,30 @@
+{
+  "id": "US-006",
+  "title": "Installazione completa verificata su VM pulita",
+  "version": "v0.1.0",
+  "epic": "EPIC-004",
+  "module": "MOD-001",
+  "type": "User Story",
+  "priority": "P1",
+  "status": "Todo",
+  "dependencies": [
+    "US-002",
+    "US-004",
+    "US-005"
+  ],
+  "requirements": [
+    "REQ-INS-001",
+    "REQ-NFR-001",
+    "REQ-NFR-003"
+  ],
+  "design_references": [
+    "design/install"
+  ],
+  "description": "Come utente, voglio ricreare tutto il desktop su una VM appena reimpostata con un clone e un comando.",
+  "acceptance_criteria": [
+    "Su una VM del Terminal reimpostata, seguendo solo il README, install.sh termina senza errori e alla riapertura del display parte Hyprland con tutte le funzioni di REQ-DSK-001, REQ-DSK-002 e REQ-DSK-003.",
+    "Una seconda esecuzione di install.sh non modifica file e non crea backup, come mostra il riepilogo.",
+    "Un file preesistente diverso dal link atteso viene salvato in backup prima di essere sostituito.",
+    "Nessun segreto (chiavi, token) viene creato o copiato nel repository dallo script."
+  ]
+}

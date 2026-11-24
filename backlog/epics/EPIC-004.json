@@ -1,0 +1,5 @@
+{
+  "id": "EPIC-004",
+  "title": "Installazione",
+  "scope": "Riproducibilità del desktop da una VM pulita: script di installazione, pacchetti, collegamento dei dotfile, backup e verifica end-to-end."
+}
