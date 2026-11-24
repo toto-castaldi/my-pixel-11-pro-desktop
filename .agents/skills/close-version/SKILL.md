@@ -1,0 +1,48 @@
+---
+name: close-version
+description: Close the open version - verify every item is Done and release acceptance is met, finalize CHANGELOG and the backlog in a release branch, merge into main, create the annotated vX.Y.Z tag and push. Run only on explicit user request.
+disable-model-invocation: true
+---
+
+# Close a version
+
+Rules: `docs/process/release.md` and `docs/process/backlog.md` §1; read them first. `backlog` is `python3 .agents/tools/backlog.py`. Run only because the user explicitly asked. The user's arguments, if any, name the version; otherwise use the open version in `backlog status`.
+
+## 1. Checks
+
+1. `main` is up to date (`git switch main && git pull --ff-only`) and the working tree is clean.
+2. Every item assigned to the version is `Done` or `Dropped` (`backlog list --version vX.Y.Z`). List any that are not and stop.
+3. No item branch of this version is still unmerged (`git branch -a --no-merged main`). Report any and stop.
+4. Walk through the release acceptance criteria in `docs/requirements/acceptance.md`: for each, give evidence. Stop if any is not met, unless the user explicitly decides otherwise (record that decision with `backlog notes --add`).
+5. Run the closing gate of `AGENTS.md` §6 on `main` and all the integration suites listed there; verify the end-to-end evidence that release acceptance requires. Stop if any required check fails.
+
+## 2. Release branch
+
+The date in `CHANGELOG.md` is today's date from `date +%F` (`docs/PROCESS.md` §4.2).
+
+```bash
+git switch -c release/vX.Y.Z
+```
+
+1. `CHANGELOG.md`: rename `[Unreleased]` to `[X.Y.Z] - YYYY-MM-DD`, remove empty subsections, add a new empty `[Unreleased]` section on top.
+2. `backlog close-version vX.Y.Z`. Ask the user whether to open the next version now: if yes, `backlog version open vA.B.C` or `backlog version add vA.B.C --goal …`. Existing fully defined items may be moved with `backlog edit <ID> --version …`; do not create new items on the release branch. Promote unassigned ideas to items later on `main` using `add-item`.
+3. Compact requirements and design (`docs/process/docs.md` §3):
+   - `docs/requirements/README.md`: remove the scope in and out of the closed version; capabilities that remain binding are covered by their requirements. `docs/requirements/acceptance.md`: remove the criteria of the closed version.
+   - The files of `docs/requirements/` and `docs/design/` changed since the previous tag (`git diff --name-only <previous tag>..HEAD -- docs/requirements docs/design`, all files for the first version): rewrite each to the current state, removing item IDs, dates, decision narratives and evidence. Do not change behavior or decisions; if the rewrite reveals a conflict, stop and report it.
+   - If the next version is opened, set the target version of the two `README.md` files and write its scope and acceptance as agreed with the user.
+   - Remove `Withdrawn` requirements whose ID no open item references only if the user agrees; the ID is never reused.
+4. `backlog check`.
+5. Commit: `release(vX.Y.Z): <short description in the project language>`.
+
+## 3. Merge, tag, publish
+
+```bash
+git switch main
+git merge --no-ff release/vX.Y.Z -m "merge(vX.Y.Z): release"
+git tag -a vX.Y.Z -m "<version goal in the project language>"
+git push origin main
+git push origin vX.Y.Z
+git branch -d release/vX.Y.Z
+```
+
+Skip pushes if there is no remote. Report: tag, merge commit, CHANGELOG section, next version state. If the user wants to turn unassigned ideas into items, do so afterward on clean `main` using `add-item`, one commit per item.

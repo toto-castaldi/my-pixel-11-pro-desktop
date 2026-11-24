@@ -1,0 +1,24 @@
+# Local agent state and credentials (project pi extensions are tracked)
+.pi/*
+!.pi/extensions/
+.claude/settings.local.json
+# Type declarations Claude Code writes beside the plugins it loads
+.agents/skills/*/.claude-plugin/types/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Temporary files (spikes, experiments)
+tmp/
+temp/
+*.log
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Stack-specific ignores are added during the kickoff

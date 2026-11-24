@@ -1,0 +1,39 @@
+---
+name: add-item
+description: Add one new User Story, Task, Spike or Bug to the backlog on main, recording the requirement first when behavior changes, assigning epic, version, priority, dependencies and acceptance criteria. Use when a request needs a new backlog item.
+---
+
+# Add an item to the backlog
+
+Rules: `docs/PROCESS.md` §3, §4, `docs/process/git.md` §1, `docs/process/backlog.md` and, when requirements or design change, `docs/process/docs.md`; read them first. The user's arguments describe the new work. `backlog` is `python3 .agents/tools/backlog.py`.
+
+## 1. Understand
+
+Before starting, verify that the current branch is `main` and the working tree is clean. If either check fails, stop and ask the user to resolve it; do not switch branches, stash or discard changes automatically. If `main` has an upstream, run `git pull --ff-only` before making changes; stop if it fails. Then check that `main` has no local commits missing from its upstream (`git log --oneline @{u}..` is empty): the addition is pushed at the end and must not publish other work. If it is not empty, stop and ask the user to push or resolve those commits first.
+
+1. Run `backlog status`, `backlog list --limit 0` and `backlog docs`; read `docs/requirements/README.md`, only the requirement and design files related to the request, and the module catalog `docs/design/modules.md`, if any.
+2. Classify the work: `US` (value for an actor), `TEC` (technical), `SPIKE` (questions to answer), `BUG` (behavior contradicting requirements or acceptance criteria).
+3. Check for duplicates or overlaps with existing items and requirements; report them.
+4. Ask the user what is missing (use a structured question tool if available), in particular:
+   - target version: the open version (this is a scope change: confirm explicitly), a future version (`backlog version add --planned` if it does not exist), or the unassigned ideas;
+   - epic: an existing one or a new one (title, scope; create it with `backlog epic add`);
+   - optional module: an existing module from `docs/design/modules.md`, a new agreed module, or none for unassigned/cross-cutting work;
+   - priority and dependencies;
+   - for bugs: version where found, steps to reproduce, expected and actual behavior.
+
+## 2. Write
+
+Add one item on `main`; do not create a branch. If the request arose on an item branch, stop and ask the user to return to a clean `main` before starting. Do not implement the item here.
+
+1. **Requirements first**: if behavior or scope changes, add or update the requirement file `docs/requirements/<ID>.md` (copy `_TEMPLATE.md` for a new one, with a new stable ID; never reuse IDs; mark removed ones `Withdrawn` with the reason). Update the in/out of scope lists in `docs/requirements/README.md` if needed. Describe the current behavior, not the history of the request (`docs/process/docs.md` §3). A template upgrade needs no requirement (`docs/PROCESS.md` §3).
+2. **Design**: if a new module was agreed, record its ID, name, responsibility and known location or boundaries in `docs/design/modules.md`. If the item opens a design decision, add it to `Open decisions` in `docs/design/README.md`.
+3. **Backlog**: `backlog add --type <US|TEC|SPIKE|BUG> --title … --version … --epic … --priority … --criterion … [--dependencies …] [--requirements …] [--design-references design/<topic>,…] [--module …] [--description …]`. It assigns the next free ID and refuses invalid items, so requirements and modules must already be recorded. Repeat `--criterion` for each verifiable criterion. Use `--module` only when a module was agreed. For bugs add `--found-in`, `--steps-to-reproduce`, `--expected`, `--actual` and a regression-test criterion. For an unassigned idea use `backlog ideas --add` instead: one line, no ID. If it already has full fields, use `backlog add --unassigned` instead of `--version`.
+4. Run `backlog check`; fix any inconsistency before committing.
+
+## 3. Commit and push
+
+1. After checking consistency, `git diff --check` and `git diff --cached --check`, create exactly one commit on `main` containing the new item and all related requirements and design updates, without unrelated changes. Use the project language, e.g. `docs(US-014): <"add" + title>`. No merge is needed.
+2. If `main` has an upstream, push it at once (`git push`) so that every clone sees the backlog change. No quality gate is needed: the commit is documentation only. Skip the push if there is no upstream.
+3. If the push is rejected because the upstream moved, run `git pull --rebase`, then `backlog check`, and push again. If the rebase conflicts (for example another clone added the same ID) or the check fails, run `git rebase --abort` if a rebase is in progress, keep the local commit and stop: report that the item is not shared and ask the user how to proceed. Any other push failure: keep the commit and report it.
+
+Report to the user: the new item, the commit and the push result.
