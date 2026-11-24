@@ -6,3 +6,4 @@ Moduli logici del progetto, usati per classificare gli item del backlog. Non son
 | --- | --- | --- | --- |
 | MOD-001 | INSTALL | Script di installazione, elenco dei pacchetti, collegamento dei dotfile e backup | `install.sh`, `lib/`, `packages/` |
 | MOD-002 | SESSION | Avvio della sessione grafica: unità systemd utente che sostituisce Weston con Hyprland e ritorno a Weston | `systemd/` |
+| MOD-003 | DESKTOP | Dotfile di Hyprland (configurazione Lua) e delle applicazioni del desktop | `config/` |

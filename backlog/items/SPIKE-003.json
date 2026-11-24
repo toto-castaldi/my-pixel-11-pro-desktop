@@ -1,0 +1,20 @@
+{
+  "id": "SPIKE-003",
+  "title": "Audio nella VM: PulseAudio e tasti volume",
+  "version": "v0.1.0",
+  "epic": "EPIC-003",
+  "module": "MOD-003",
+  "type": "Spike",
+  "priority": "P1",
+  "status": "Todo",
+  "dependencies": [],
+  "design_references": [
+    "design/desktop"
+  ],
+  "description": "Nella VM gira PulseAudio, non PipeWire: capire se l'audio arriva al telefono e con quali strumenti controllare il volume da Hyprland e da waybar.",
+  "acceptance_criteria": [
+    "Il report docs/spikes/SPIKE-003-audio.md indica se un suono riprodotto nella VM si sente dal telefono, con il test usato.",
+    "Il report indica il comando per alzare, abbassare e silenziare il volume (es. pactl o wpctl) e il modulo waybar adatto.",
+    "Il report dice se conviene restare su PulseAudio o passare a PipeWire, con i motivi."
+  ]
+}
