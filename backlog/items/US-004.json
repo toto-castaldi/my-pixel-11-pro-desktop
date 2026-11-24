@@ -1,0 +1,25 @@
+{
+  "id": "US-004",
+  "title": "Sfondo, blocco schermo e notifiche",
+  "version": "v0.1.0",
+  "epic": "EPIC-003",
+  "module": "MOD-003",
+  "type": "User Story",
+  "priority": "P2",
+  "status": "Todo",
+  "dependencies": [
+    "US-003"
+  ],
+  "requirements": [
+    "REQ-DSK-002"
+  ],
+  "design_references": [
+    "design/desktop"
+  ],
+  "description": "Come utente, voglio uno sfondo, il blocco schermo e le notifiche, per avere un desktop completo.",
+  "acceptance_criteria": [
+    "All'avvio della sessione hyprpaper mostra lo sfondo versionato in config/.",
+    "La scorciatoia documentata blocca lo schermo con hyprlock e la password dell'utente lo sblocca.",
+    "notify-send \"prova\" mostra una notifica di mako nella sessione."
+  ]
+}
