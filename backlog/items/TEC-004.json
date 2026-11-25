@@ -5,7 +5,8 @@
   "epic": "EPIC-001",
   "type": "Task",
   "priority": "P0",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "task/TEC-004-ambiente-sviluppo-dock-adb-wifi",
   "dependencies": [],
   "design_references": [
     "design/test-strategy"
