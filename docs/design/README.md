@@ -1,6 +1,6 @@
 # Technical design — my-pixel-11-pro-desktop
 
-**Target version:** v0.1.0
+**Target version:** v0.2.0
 
 The *how* of the project, one file per topic (`docs/process/docs.md` §2). Requirements are in `docs/requirements/`. Items reference a topic as `design/<topic>` (the file `docs/design/<topic>.md`). Topics grow with the items that introduce or change design choices; relevant decisions with meaningful alternatives go into `docs/adr/`. List the topics with `python3 .agents/tools/backlog.py docs`; read only the files you need.
 
@@ -23,4 +23,4 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 
 Decisions still to be closed and the backlog items that will close them:
 
-- Come rendere `wayland-0` il socket di Hyprland per la clipboard condivisa (REQ-DSK-005): link `wayland-0 → wayland-1` creato da `start-session`, oppure Hyprland avviato con `--socket wayland-0` (SPIKE-004). La chiude US-007.
+- Come rendere `wayland-0` il socket di Hyprland per la clipboard condivisa (REQ-DSK-005): link `wayland-0 → wayland-1` creato da `start-session`, oppure Hyprland avviato con `--socket wayland-0`. La chiude US-007.

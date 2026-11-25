@@ -1,6 +1,6 @@
 # Requirements — my-pixel-11-pro-desktop
 
-**Target version:** v0.1.0
+**Target version:** v0.2.0
 
 **State:** baseline
 
@@ -15,7 +15,7 @@ The *what* of the project, one file per requirement (`docs/process/docs.md` §1)
 
 ## Goal
 
-Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile). La v0.1.0 è riuscita quando, su una VM appena reimpostata, un clone del repository e `install.sh` bastano per avere sul display del Terminal un desktop Hyprland accelerato dalla GPU, con barra, launcher, terminale, sfondo, blocco schermo, notifiche, screenshot e cronologia della clipboard.
+Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile). La v0.2.0 è riuscita quando il testo copiato in un'app Android si incolla nella sessione Hyprland e viceversa, attraverso il canale della clipboard dell'app Terminal, senza perdere nulla del desktop esistente.
 
 ## Actors
 
@@ -23,19 +23,15 @@ Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un des
 
 ## Scope
 
-### In scope for v0.1.0
+### In scope for v0.2.0
 
-- Hyprland come compositor del display del Terminal al posto di Weston, con accelerazione GPU, e ritorno a Weston con un comando.
-- Desktop base: waybar, fuzzel, foot, tastiera italiana, scorciatoie compatibili con l'input di Android.
-- Sfondo (swaybg), blocco schermo (hyprlock), notifiche (mako).
-- Screenshot (grim, slurp), cronologia della clipboard.
-- `install.sh` rieseguibile che installa i pacchetti, collega i dotfile con link simbolici e fa backup di ciò che sostituisce.
+- Clipboard di testo condivisa nei due versi tra la sessione Hyprland e le app Android (REQ-DSK-005), anche dopo un riavvio della VM, senza perdere il ritorno a Weston.
 
-### Out of scope for v0.1.0
+### Out of scope for v0.2.0
 
 Do not introduce these without first updating the requirements and the backlog:
 
-- Condivisione della clipboard tra la VM e Android (REQ-DSK-005, pianificata per la v0.2.0).
+- Condivisione di immagini o altri contenuti non testuali nella clipboard.
 - Controllo del volume (REQ-DSK-004).
 - Tema grafico coordinato tra le applicazioni.
 - Applicazioni desktop aggiuntive (browser, file manager, editor) e ambienti di sviluppo.

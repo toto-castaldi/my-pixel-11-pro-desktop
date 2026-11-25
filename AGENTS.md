@@ -51,7 +51,7 @@ Architecture and module boundaries: three modules (`docs/design/modules.md`): IN
 
 ## 6. Quality gate
 
-Closing gate (`docs/PROCESS.md` §6), all run by `./scripts/gate.sh` (created by TEC-002):
+Closing gate (`docs/PROCESS.md` §6), all run by `./scripts/gate.sh`:
 
 ```bash
 shellcheck install.sh lib/*.sh scripts/*.sh systemd/*.sh
