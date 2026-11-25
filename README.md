@@ -6,23 +6,49 @@ L'app Terminal esegue una VM Debian 13 (trixie, aarch64) e ne mostra il display 
 
 ## Stato
 
-In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana e scorciatoie; le altre parti del desktop arrivano con gli item successivi. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
+In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana, scorciatoie, sfondo, blocco schermo, notifiche, screenshot e cronologia della clipboard. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
 
 ## Prerequisiti
 
 - Un Pixel con l'app Terminal di Android e il display grafico attivo.
-- Nella VM: utente `droid` con `sudo`, accesso a internet, `git`.
-- Una chiave SSH della VM registrata su GitHub, per clonare il repository.
+- Nella VM: utente `droid` con `sudo` e accesso a internet.
+- Un account GitHub, per registrare la chiave SSH della VM.
 
 ## Installazione
 
-Disponibile dalla v0.1.0:
+Su una VM appena creata o reimpostata, i comandi si danno nella vista testuale (Terminal) dell'app.
 
-```bash
-git clone git@github.com:toto-castaldi/my-pixel-11-pro-desktop.git
-cd my-pixel-11-pro-desktop
-./install.sh
-```
+1. Aggiornare l'elenco dei pacchetti e installare `git`, che l'immagine della VM non contiene:
+
+   ```bash
+   sudo apt-get update
+   sudo apt-get install -y git
+   ```
+
+2. Dare una password all'utente `droid`, che serve per sbloccare lo schermo:
+
+   ```bash
+   sudo passwd droid
+   ```
+
+3. Preparare l'accesso a GitHub: creare una chiave SSH della VM, aggiungere la chiave pubblica stampata dal secondo comando su GitHub (Settings → SSH and GPG keys → New SSH key) e provare la connessione, accettando l'impronta dell'host di GitHub:
+
+   ```bash
+   ssh-keygen -t ed25519
+   cat ~/.ssh/id_ed25519.pub
+   ssh -T git@github.com
+   ```
+
+   La chiave privata resta in `~/.ssh/` della VM e non va mai copiata nel repository.
+
+4. Clonare il repository nella home ed eseguire lo script:
+
+   ```bash
+   cd ~
+   git clone git@github.com:toto-castaldi/my-pixel-11-pro-desktop.git
+   cd my-pixel-11-pro-desktop
+   ./install.sh
+   ```
 
 Lo script installa Hyprland da `trixie-backports`, collega l'unità `~/.config/systemd/user/weston.service` del progetto e maschera `weston.socket`: quando l'app Terminal apre il display parte Hyprland al posto di Weston. Per passare subito alla nuova sessione:
 
@@ -114,7 +140,7 @@ che equivale a `./install.sh`: anche lo script senza opzioni, ad esempio dopo un
 | `install.sh` | script di installazione |
 | `lib/` | funzioni dello script: `core.sh` (pure, testabili) e `effects.sh` (apt e filesystem) |
 | `packages/` | elenchi dei pacchetti Debian, un pacchetto per riga; quelli da `trixie-backports` in file `*.backports.list` |
-| `config/` | dotfile del desktop, uno per applicazione: `hypr/` (Hyprland, `hyprland.lua`), `waybar/` (barra), `foot/` (terminale), `fuzzel/` (launcher); `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
+| `config/` | dotfile del desktop, uno per applicazione: `hypr/` (Hyprland, `hyprland.lua`), `waybar/` (barra), `foot/` (terminale), `fuzzel/` (launcher), `mako/` (notifiche); `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
 | `systemd/` | unità systemd utente della sessione grafica (`weston.service`) e il suo comando di avvio (`start-session.sh`, collegato in `~/.local/libexec/my-pixel-11-pro-desktop/`) |
 | `tests/` | test unitari bats |
 | `scripts/` | strumenti di sviluppo (`gate.sh`) |
