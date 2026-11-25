@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "User Story",
   "priority": "P1",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "us/US-002-ritorno-a-weston",
   "dependencies": [
     "US-001"
   ],
