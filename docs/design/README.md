@@ -18,9 +18,10 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 | Modificatore delle scorciatoie | `ALT`, alternativa `CTRL + ALT` | SUPER/Meta e Tab non arrivano a Hyprland dalla finestra del Terminal |
 | Server audio | PulseAudio dell'immagine, volume con `pactl`, modulo waybar `pulseaudio` | PipeWire non risolve il blocco, che sta in Android; PulseAudio è già installato |
 | Quality gate | shellcheck, `Hyprland --verify-config`, bats | Copre script e configurazione senza toccare il sistema |
+| Socket della clipboard condivisa | Link `wayland-0 → $WAYLAND_DISPLAY` creato all'avvio di Hyprland (`systemd/session-socket.sh`, US-007) | Hyprland 0.55 rifiuta `--socket` senza `--wayland-fd` (passaggio di un socket già aperto); il link non cambia il socket delle app della sessione e non tocca il ripiego su Weston (`design/session`) |
 
 ## Open decisions
 
 Decisions still to be closed and the backlog items that will close them:
 
-- Come rendere `wayland-0` il socket di Hyprland per la clipboard condivisa (REQ-DSK-005): link `wayland-0 → wayland-1` creato da `start-session`, oppure Hyprland avviato con `--socket wayland-0`. La chiude US-007.
+Nessuna.

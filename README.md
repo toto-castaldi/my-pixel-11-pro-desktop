@@ -6,7 +6,7 @@ L'app Terminal esegue una VM Debian 13 (trixie, aarch64) e ne mostra il display 
 
 ## Stato
 
-Versione **v0.1.0** rilasciata, v0.2.0 in sviluppo. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana, scorciatoie, sfondo, blocco schermo, notifiche, screenshot e cronologia della clipboard. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
+Versione **v0.1.0** rilasciata, v0.2.0 in sviluppo. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana, scorciatoie, sfondo, blocco schermo, notifiche, screenshot, cronologia della clipboard e clipboard condivisa con Android. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
 
 ## Prerequisiti
 
@@ -81,6 +81,19 @@ Tastiera e mouse arrivano a Hyprland solo dalla vista grafica (Display) dell'app
 
 Gli screenshot sono salvati in PNG nella cartella `~/Pictures/Screenshots/`, con il nome `AAAAMMGG-HHMMSS.png`; una notifica indica il file. La cronologia della clipboard (cliphist) conserva i testi copiati durante la sessione Hyprland, anche tra un riavvio e l'altro; si svuota con `cliphist wipe`.
 
+### Clipboard condivisa con Android
+
+Il testo copiato in un'app Android si incolla nelle applicazioni di Hyprland, e viceversa, attraverso il canale della clipboard dell'app Terminal; funziona solo per il testo, non per immagini o file. Il passaggio avviene ai cambi di focus della finestra del Terminal:
+
+- **da Android alla VM:** si copia il testo in un'app Android, si torna nella finestra del Terminal (vista grafica) e si incolla, per esempio in foot con `Ctrl + Maiusc + V`;
+- **dalla VM ad Android:** si copia il testo in Hyprland (in foot `Ctrl + Maiusc + C`), poi si esce dalla finestra del Terminal: il testo arriva ad Android solo a quel punto, e si incolla nell'app Android.
+
+L'app Terminal usa il socket Wayland `wayland-0`, mentre Hyprland apre `wayland-1`: all'avvio Hyprland esegue `~/.local/libexec/my-pixel-11-pro-desktop/session-socket link`, che crea il link `/run/user/1000/wayland-0 → wayland-1`; `session-socket unlink` lo toglie quando la sessione si ferma. Non serve nessun intervento, anche dopo un riavvio della VM. Ogni testo che arriva da Android entra anche nella cronologia (`Ctrl + Alt + V`). Se la condivisione smette di funzionare dopo un aggiornamento dell'app Terminal, il socket usato dall'app si controlla con:
+
+```bash
+sudo journalctl -u linux_vm_manager | grep -E 'wl-(copy|paste)'
+```
+
 Dopo l'uscita il display resta vuoto finché la sessione non riparte: si riapre il display dall'app Terminal, oppure da una shell della VM:
 
 ```bash
@@ -114,7 +127,7 @@ Il comando toglie l'unità `~/.config/systemd/user/weston.service` del progetto 
 systemctl --user restart weston
 ```
 
-Il comando toglie anche `WAYLAND_DISPLAY` e `DISPLAY` di Hyprland dall'ambiente dei servizi utente, che altrimenti farebbero partire Weston dentro un compositor che non c'è più. La sessione Hyprland li toglie da sola quando si ferma, anche per un riavvio o per l'uscita con Ctrl+Alt+Q.
+Il comando toglie anche `WAYLAND_DISPLAY` e `DISPLAY` di Hyprland dall'ambiente dei servizi utente, che altrimenti farebbero partire Weston dentro un compositor che non c'è più. La sessione Hyprland li toglie da sola quando si ferma, anche per un riavvio o per l'uscita con Ctrl+Alt+Q. Toglie inoltre il link `wayland-0` della clipboard condivisa, così Weston apre di nuovo quel socket e la condivisione con Android continua a funzionare anche con Weston.
 
 Per tornare a Hyprland:
 
@@ -132,7 +145,7 @@ che equivale a `./install.sh`: anche lo script senza opzioni, ad esempio dopo un
 | `lib/` | funzioni dello script: `core.sh` (pure, testabili) e `effects.sh` (apt e filesystem) |
 | `packages/` | elenchi dei pacchetti Debian, un pacchetto per riga; quelli da `trixie-backports` in file `*.backports.list` |
 | `config/` | dotfile del desktop, uno per applicazione: `hypr/` (Hyprland, `hyprland.lua`), `waybar/` (barra), `foot/` (terminale), `fuzzel/` (launcher), `mako/` (notifiche); `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
-| `systemd/` | unità systemd utente della sessione grafica (`weston.service`) e il suo comando di avvio (`start-session.sh`, collegato in `~/.local/libexec/my-pixel-11-pro-desktop/`) |
+| `systemd/` | unità systemd utente della sessione grafica (`weston.service`) , il suo comando di avvio (`start-session.sh`) e il link del socket della clipboard condivisa (`session-socket.sh`), collegati in `~/.local/libexec/my-pixel-11-pro-desktop/` |
 | `tests/` | test unitari bats |
 | `scripts/` | strumenti di sviluppo (`gate.sh`) |
 
