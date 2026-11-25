@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "Spike",
   "priority": "P0",
-  "status": "Todo",
+  "status": "Done",
+  "branch": "spike/SPIKE-002-tenuta-riavvio-aggiornamenti",
   "dependencies": [],
   "requirements": [
     "REQ-NFR-002"
@@ -19,5 +20,7 @@
     "Il report docs/spikes/SPIKE-002-avvio-aggiornamenti.md documenta l'esito di almeno un riavvio completo della VM con l'override attivo.",
     "Il report elenca i file che l'app Terminal crea o riscrive nella VM e quando, con le fonti.",
     "Il report indica i rischi residui per l'override in ~/.config/systemd/user e una raccomandazione per US-001."
-  ]
+  ],
+  "outcome": "Report docs/spikes/SPIKE-002-avvio-aggiornamenti.md (esito Partial). Riavvio: in 8 boot registrati nel journal con l'override attivo (2026-11-24 18:48 – 2026-11-25 12:51), anche dopo una chiusura brusca, Hyprland è partito 4–5 s dopo il kernel con NRestarts=0; nessun riavvio controllato, per decisione dell'utente. File dell'app: cloud-init NoCloud (cidata su /dev/vdb) esegue init.sh una volta per instance-id: copia root_files in / (file di REQ-NFR-002, unità in /etc/systemd/system, ~/.config/weston.ini), scrive ~/.bash_aliases, fa chown -R della home; ~/weston.env è riscritto a ogni shell interattiva. Aggiornamento dell'immagine (solo analisi statica, nessun aggiornamento reale): restore-backup ripristina la home dal vecchio rootfs, override compreso, ma reinstalla i pacchetti senza trixie-backports. Rischio principale: override senza Hyprland e Weston mascherato. Raccomandazione per US-001: ripiego su Weston nell'unità e ./install.sh da rieseguire dopo un aggiornamento. Aggiornato docs/design/session.md. Gate ./scripts/gate.sh superato sulla VM (copia in /tmp); sull'host di sviluppo manca Hyprland. Solo documentazione: install.sh non toccato, file di REQ-NFR-002 solo letti, hash nel report; nessun nuovo comando per il README.",
+  "closed_at": "2026-11-25"
 }
