@@ -16,7 +16,7 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 | Dotfile | Link simbolici da `$HOME` ai file del repository, con backup | Ogni modifica locale è subito versionata |
 | Linguaggio degli script | Bash, con funzioni pure separate dagli effetti | Disponibile ovunque nella VM; le funzioni pure si testano con bats |
 | Modificatore delle scorciatoie | `ALT`, alternativa `CTRL + ALT` | SUPER/Meta e Tab non arrivano a Hyprland dalla finestra del Terminal |
-| Server audio | PulseAudio dell'immagine, volume con `pactl`, modulo waybar `pulseaudio` | PipeWire non risolve il blocco, che sta in Android; PulseAudio è già installato (SPIKE-003) |
+| Server audio | PulseAudio dell'immagine, volume con `pactl`, modulo waybar `pulseaudio` | PipeWire non risolve il blocco, che sta in Android; PulseAudio è già installato |
 | Quality gate | shellcheck, `Hyprland --verify-config`, bats | Copre script e configurazione senza toccare il sistema |
 
 ## Open decisions
