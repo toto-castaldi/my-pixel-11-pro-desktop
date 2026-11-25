@@ -22,6 +22,5 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 
 Decisions still to be closed and the backlog items that will close them:
 
-- Robustezza dell'override al riavvio e agli aggiornamenti dell'app Terminal — SPIKE-002
 - Server audio (PulseAudio o PipeWire) e comando per il volume — SPIKE-003
 - Fattibilità della clipboard condivisa con Android — SPIKE-004
