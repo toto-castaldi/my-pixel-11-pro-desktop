@@ -105,3 +105,30 @@ core_link_action() {
 		*) echo "backup" ;;
 	esac
 }
+
+# Command line of the graphical session, one string to split on blanks.
+#   start_hyprland: path of start-hyprland
+#   present:        "yes" when that path is an executable file
+# Hyprland when present, otherwise Weston with the same command as the
+# system unit /etc/systemd/user/weston.service.
+core_session_command() {
+	local start_hyprland="$1" present="$2"
+	if [ "$present" = "yes" ]; then
+		printf '%s\n' "$start_hyprland"
+	else
+		echo "/usr/bin/weston --modules=systemd-notify.so --xwayland --continue-without-input"
+	fi
+}
+
+# Decide how to mask a user unit, given what is at its path now
+# (kind and current as in core_link_action). Prints "skip" (already
+# masked), "mask" (create the link to /dev/null) or "backup" (move the
+# existing entry away, then mask).
+core_mask_action() {
+	local kind="$1" current="$2"
+	case "$(core_link_action "$kind" "$current" /dev/null)" in
+		skip) echo "skip" ;;
+		link) echo "mask" ;;
+		*) echo "backup" ;;
+	esac
+}

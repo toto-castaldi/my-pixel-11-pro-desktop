@@ -6,7 +6,7 @@ L'app Terminal esegue una VM Debian 13 (trixie, aarch64) e ne mostra il display 
 
 ## Stato
 
-In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione esiste come struttura di base: gli elenchi di pacchetti e dotfile sono ancora vuoti e vengono riempiti dagli item successivi. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
+In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione avvia Hyprland al posto di Weston sul display; la configurazione del desktop arriva con gli item successivi. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
 
 ## Prerequisiti
 
@@ -24,9 +24,35 @@ cd my-pixel-11-pro-desktop
 ./install.sh
 ```
 
-e poi riaprire il display dall'app Terminal.
+Lo script installa Hyprland da `trixie-backports`, collega l'unità `~/.config/systemd/user/weston.service` del progetto e maschera `weston.socket`: quando l'app Terminal apre il display parte Hyprland al posto di Weston. Per passare subito alla nuova sessione:
+
+```bash
+systemctl --user restart weston
+```
+
+oppure riavviare la VM. Se Hyprland non è installato, la stessa unità avvia Weston, così il display non resta vuoto. Il log della sessione si legge con `journalctl --user -u weston`.
 
 `./install.sh --help` mostra l'uso senza modificare il sistema. Lo script è rieseguibile: una seconda esecuzione stampa `Nessuna modifica` e non crea backup.
+
+## Dopo un aggiornamento dell'app Terminal
+
+Un aggiornamento dell'immagine della VM, con il ripristino del backup, riporta la home ma non i pacchetti da `trixie-backports`: il display mostra Weston invece di Hyprland. Basta rieseguire lo script dal clone del repository, che reinstalla Hyprland da `trixie-backports`:
+
+```bash
+cd ~/my-pixel-11-pro-desktop
+./install.sh
+systemctl --user restart weston
+```
+
+## Tornare a Weston
+
+Per tornare alla sessione Weston dell'app Terminal basta togliere l'override (Weston non viene mai disinstallato):
+
+```bash
+rm ~/.config/systemd/user/weston.service ~/.config/systemd/user/weston.socket
+systemctl --user daemon-reload
+systemctl --user restart weston
+```
 
 ## Struttura del repository
 
@@ -36,7 +62,7 @@ e poi riaprire il display dall'app Terminal.
 | `lib/` | funzioni dello script: `core.sh` (pure, testabili) e `effects.sh` (apt e filesystem) |
 | `packages/` | elenchi dei pacchetti Debian, un pacchetto per riga; quelli da `trixie-backports` in file `*.backports.list` |
 | `config/` | dotfile del desktop; `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
-| `systemd/` | unità systemd utente della sessione grafica |
+| `systemd/` | unità systemd utente della sessione grafica (`weston.service`) e il suo comando di avvio (`start-session.sh`, collegato in `~/.local/libexec/my-pixel-11-pro-desktop/`) |
 | `tests/` | test unitari bats |
 | `scripts/` | strumenti di sviluppo (`gate.sh`) |
 

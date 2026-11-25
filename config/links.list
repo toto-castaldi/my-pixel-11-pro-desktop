@@ -2,3 +2,5 @@
 # <file nel repository> <destinazione relativa a $HOME>
 # Esempio: config/foot/foot.ini .config/foot/foot.ini
 # Gli item successivi aggiungono qui i propri dotfile.
+systemd/weston.service .config/systemd/user/weston.service
+systemd/start-session.sh .local/libexec/my-pixel-11-pro-desktop/start-session

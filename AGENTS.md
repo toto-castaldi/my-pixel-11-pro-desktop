@@ -54,7 +54,7 @@ Architecture and module boundaries: three modules (`docs/design/modules.md`): IN
 Closing gate (`docs/PROCESS.md` §6), all run by `./scripts/gate.sh` (created by TEC-002):
 
 ```bash
-shellcheck install.sh lib/*.sh scripts/*.sh
+shellcheck install.sh lib/*.sh scripts/*.sh systemd/*.sh
 Hyprland --verify-config -c config/hypr/hyprland.lua
 bats tests/
 # no build step

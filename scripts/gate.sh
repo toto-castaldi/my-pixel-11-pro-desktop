@@ -9,7 +9,7 @@ step() {
 }
 
 step "shellcheck"
-shellcheck install.sh lib/*.sh scripts/*.sh
+shellcheck install.sh lib/*.sh scripts/*.sh systemd/*.sh
 
 step "Hyprland --verify-config"
 Hyprland --verify-config -c config/hypr/hyprland.lua
