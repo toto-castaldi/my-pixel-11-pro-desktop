@@ -15,6 +15,13 @@ EnvironmentFile=-%h/weston.env
 Environment=XDG_SESSION_TYPE=wayland
 Environment=XDG_CURRENT_DESKTOP=Hyprland
 Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus
+# On exit Hyprland runs unset-environment and then
+# dbus-update-activation-environment --systemd, which puts WAYLAND_DISPLAY
+# back into the user manager environment (BUG-001). With this variable it
+# leaves that environment alone: hyprland.lua exports the session
+# variables and ExecStopPost removes them (core_session_env_vars).
+Environment=HYPRLAND_NO_SD_VARS=1
 ExecStart=%h/.local/libexec/my-pixel-11-pro-desktop/start-session
+ExecStopPost=/usr/bin/systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE
 StandardOutput=journal
 StandardError=journal

@@ -123,3 +123,9 @@ setup() {
 	grep -q 'cliphist decode | wl-copy' "$HYPR"
 	grep -q 'hl.bind("CTRL + ALT + V",       hl.dsp.exec_cmd(clipHistory)' "$HYPR"
 }
+
+@test "weston.service: the session leaves no Wayland variables in the user manager (BUG-001)" {
+	local unit="$REPO/systemd/weston.service"
+	grep -qx 'Environment=HYPRLAND_NO_SD_VARS=1' "$unit"
+	grep -qx "ExecStopPost=/usr/bin/systemctl --user unset-environment $(core_session_env_vars)" "$unit"
+}

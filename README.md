@@ -114,6 +114,8 @@ Il comando toglie l'unità `~/.config/systemd/user/weston.service` del progetto 
 systemctl --user restart weston
 ```
 
+Il comando toglie anche `WAYLAND_DISPLAY` e `DISPLAY` di Hyprland dall'ambiente dei servizi utente, che altrimenti farebbero partire Weston dentro un compositor che non c'è più. La sessione Hyprland li toglie da sola quando si ferma, anche per un riavvio o per l'uscita con Ctrl+Alt+Q.
+
 Per tornare a Hyprland:
 
 ```bash

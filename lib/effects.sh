@@ -132,12 +132,15 @@ effects_unlink() {
 	esac
 }
 
-# Remove WAYLAND_DISPLAY and DISPLAY from the user manager environment.
-# Hyprland exports them there; with them the stock Weston unit would try
-# to run nested in a compositor that no longer exists and fail. This is
-# runtime state only, so it is not counted as a change.
+# Remove the variables of the Hyprland session (core_session_env_vars)
+# from the user manager environment. hyprland.lua exports them there; with
+# them the stock Weston unit would try to run nested in a compositor that
+# no longer exists and fail. This is runtime state only, so it is not
+# counted as a change.
 effects_forget_session_env() {
-	systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY
+	local vars
+	read -r -a vars <<<"$(core_session_env_vars)"
+	systemctl --user unset-environment "${vars[@]}"
 }
 
 # Reload the user systemd manager when units changed in this run.
