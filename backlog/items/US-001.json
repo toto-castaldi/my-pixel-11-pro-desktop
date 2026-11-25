@@ -13,6 +13,7 @@
   ],
   "requirements": [
     "REQ-SES-001",
+    "REQ-INS-001",
     "REQ-NFR-002"
   ],
   "design_references": [
@@ -24,6 +25,11 @@
     "Dopo l'apertura del display, systemctl --user status weston mostra Hyprland in esecuzione e hyprctl monitors elenca il monitor CrosvmDisplay.",
     "Il renderer usato è accelerato dalla GPU (zink su Vulkan gfxstream), verificato con eglinfo o con il log di Hyprland.",
     "Un'applicazione Wayland (foot) e una X11 (via Xwayland) si aprono nella sessione.",
-    "La sessione regge a un riavvio della VM, come da raccomandazione di SPIKE-002."
+    "Dopo un riavvio completo della VM, journalctl --user -b 0 -u weston.service mostra l'unità avviata come Hyprland e systemctl --user show weston -p NRestarts riporta NRestarts=0.",
+    "Se /usr/bin/start-hyprland non esiste, l'unità systemd/weston.service avvia Weston con lo stesso comando dell'unità di sistema (/usr/bin/weston --modules=systemd-notify.so --xwayland --continue-without-input). La scelta del comando è coperta da un test bats e, sulla VM, simulando l'assenza di start-hyprland il display mostra Weston.",
+    "Il README spiega che dopo un aggiornamento dell'app Terminal con ripristino del backup va rieseguito ./install.sh, che reinstalla Hyprland da trixie-backports."
+  ],
+  "remarks": [
+    "Criteri 5-7 aggiornati con le raccomandazioni di SPIKE-002 (docs/spikes/SPIKE-002-avvio-aggiornamenti.md)."
   ]
 }
