@@ -5,7 +5,7 @@
   "epic": "EPIC-001",
   "type": "Task",
   "priority": "P0",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "task/TEC-004-ambiente-sviluppo-dock-adb-wifi",
   "dependencies": [],
   "design_references": [
@@ -18,5 +18,8 @@
     "Il file descrive la configurazione ssh dell'host di sviluppo (host adb e pixel con ProxyCommand su adb) con soli segnaposto: nessun hostname, IP, utente, seriale o segreto",
     "ssh pixel funziona con il telefono collegato al dock e senza cavo USB verso l'host adb",
     "design/test-strategy rimanda all'ambiente di sviluppo per le prove sulla VM"
-  ]
+  ],
+  "outcome": "Creato docs/design/dev-environment.md: topologia host di sviluppo → host adb → Pixel sul dock USB (monitor, tastiera, mouse) → VM; il telefono si raggiunge da un host adb collegato via USB o sulla stessa rete Wi-Fi. Descritti il passaggio di adb a Wi-Fi (adb tcpip 5555, adb connect), la configurazione ssh con ProxyCommand su adb (adb connect automatico, -s sul seriale TCP, varianti solo USB e host adb locale) e la tabella di recupero (riavvio del telefono, cambio IP di telefono o VM, sshd fermo). Solo segnaposto per hostname, IP, utenti e seriale, perché il repository è pubblico. Rimandi in README (Sviluppo) e design/test-strategy. Verificato: con il telefono sul dock e senza cavo USB verso l'host adb, adb devices mostra solo la connessione TCP del telefono e ssh pixel entra nella VM come droid. Quality gate superato sulla VM (shellcheck, Hyprland --verify-config, bats 14/14); install.sh eseguito due volte: 'Nessuna modifica' in entrambi i casi; nessun file dell'app Terminal toccato.",
+  "changelog": "Added: documentazione del setup di sviluppo con telefono su dock USB e adb via Wi-Fi",
+  "closed_at": "2026-11-25"
 }
