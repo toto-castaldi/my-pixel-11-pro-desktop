@@ -1,0 +1,25 @@
+{
+  "id": "US-008",
+  "title": "Simboli Unicode nel terminale senza caselle vuote",
+  "version": "v0.3.0",
+  "epic": "EPIC-003",
+  "module": "MOD-003",
+  "type": "User Story",
+  "priority": "P2",
+  "status": "Todo",
+  "dependencies": [],
+  "requirements": [
+    "REQ-DSK-001"
+  ],
+  "design_references": [
+    "design/desktop"
+  ],
+  "description": "Come utente voglio che foot mostri i simboli usati dagli strumenti a riga di comando (per esempio ⏵ U+23F5 nell'indicatore 'bypass permissions' di Claude Code) invece di caselle vuote. Oggi il desktop installa solo fonts-dejavu-core e foot usa solo DejaVu Sans Mono, senza font di ripiego per i simboli.",
+  "acceptance_criteria": [
+    "install.sh installa da Debian trixie un font di simboli di ripiego (per esempio fonts-noto-core o fonts-symbola), elencato in packages/base.list.",
+    "config/foot/foot.ini dichiara il font di ripiego dopo DejaVu Sans Mono nella riga font=.",
+    "Sul display della VM, in foot, printf '\\u23f5\\u23f5 \\u276f \\u2714 \\u25b6\\n' mostra tutti i simboli senza caselle vuote, e l'indicatore 'bypass permissions' di Claude Code è leggibile.",
+    "fc-list ':charset=23f5' sulla VM elenca almeno un font.",
+    "design/desktop e README documentano il font di ripiego e il pacchetto che lo fornisce."
+  ]
+}
