@@ -15,13 +15,13 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 | Rendering | Le variabili di `~/weston.env` (zink su Vulkan gfxstream) | Sono quelle che l'app Terminal prepara per l'accelerazione GPU |
 | Dotfile | Link simbolici da `$HOME` ai file del repository, con backup | Ogni modifica locale è subito versionata |
 | Linguaggio degli script | Bash, con funzioni pure separate dagli effetti | Disponibile ovunque nella VM; le funzioni pure si testano con bats |
+| Modificatore delle scorciatoie | `ALT`, alternativa `CTRL + ALT` | SUPER/Meta e Tab non arrivano a Hyprland dalla finestra del Terminal |
 | Quality gate | shellcheck, `Hyprland --verify-config`, bats | Copre script e configurazione senza toccare il sistema |
 
 ## Open decisions
 
 Decisions still to be closed and the backlog items that will close them:
 
-- Modificatore principale delle scorciatoie e gestione di touch e gesti — SPIKE-001
 - Robustezza dell'override al riavvio e agli aggiornamenti dell'app Terminal — SPIKE-002
 - Server audio (PulseAudio o PipeWire) e comando per il volume — SPIKE-003
 - Fattibilità della clipboard condivisa con Android — SPIKE-004
