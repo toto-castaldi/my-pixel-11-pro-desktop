@@ -88,7 +88,7 @@ Il testo copiato in un'app Android si incolla nelle applicazioni di Hyprland, e 
 - **da Android alla VM:** si copia il testo in un'app Android, si torna nella finestra del Terminal (vista grafica) e si incolla, per esempio in foot con `Ctrl + Maiusc + V`;
 - **dalla VM ad Android:** si copia il testo in Hyprland (in foot `Ctrl + Maiusc + C`), poi si esce dalla finestra del Terminal: il testo arriva ad Android solo a quel punto, e si incolla nell'app Android.
 
-L'app Terminal usa il socket Wayland `wayland-0`, mentre Hyprland apre `wayland-1`: all'avvio Hyprland esegue `~/.local/libexec/my-pixel-11-pro-desktop/session-socket link`, che crea il link `/run/user/1000/wayland-0 → wayland-1`; `session-socket unlink` lo toglie quando la sessione si ferma. Non serve nessun intervento, anche dopo un riavvio della VM. Ogni testo che arriva da Android entra anche nella cronologia (`Ctrl + Alt + V`). Se la condivisione smette di funzionare dopo un aggiornamento dell'app Terminal, il socket usato dall'app si controlla con:
+L'app Terminal usa il socket Wayland `wayland-0`, mentre Hyprland apre `wayland-1`: all'avvio Hyprland esegue `~/.local/libexec/my-pixel-11-pro-desktop/session-socket link`, che crea il link `/run/user/1000/wayland-0 → wayland-1`; `session-socket unlink` lo toglie quando la sessione si ferma. Non serve nessun intervento, anche dopo un riavvio della VM. Se Hyprland manca e la sessione ripiega su Weston, la clipboard non è condivisa. Ogni testo che arriva da Android entra anche nella cronologia (`Ctrl + Alt + V`). Se la condivisione smette di funzionare dopo un aggiornamento dell'app Terminal, il socket usato dall'app si controlla con:
 
 ```bash
 sudo journalctl -u linux_vm_manager | grep -E 'wl-(copy|paste)'
@@ -127,7 +127,7 @@ Il comando toglie l'unità `~/.config/systemd/user/weston.service` del progetto 
 systemctl --user restart weston
 ```
 
-Il comando toglie anche `WAYLAND_DISPLAY` e `DISPLAY` di Hyprland dall'ambiente dei servizi utente, che altrimenti farebbero partire Weston dentro un compositor che non c'è più. La sessione Hyprland li toglie da sola quando si ferma, anche per un riavvio o per l'uscita con Ctrl+Alt+Q. Toglie inoltre il link `wayland-0` della clipboard condivisa, così Weston apre di nuovo quel socket e la condivisione con Android continua a funzionare anche con Weston.
+Il comando toglie anche `WAYLAND_DISPLAY` e `DISPLAY` di Hyprland dall'ambiente dei servizi utente, che altrimenti farebbero partire Weston dentro un compositor che non c'è più. La sessione Hyprland li toglie da sola quando si ferma, anche per un riavvio o per l'uscita con Ctrl+Alt+Q. Toglie inoltre il link `wayland-0` della clipboard condivisa, così il Weston dell'app Terminal ritrova quel socket, che usa per la clipboard con Android. Il Weston mostra solo lo sfondo, senza pannello né terminale, come quello originale dell'app.
 
 Per tornare a Hyprland:
 

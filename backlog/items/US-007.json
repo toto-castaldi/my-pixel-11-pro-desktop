@@ -6,7 +6,7 @@
   "module": "MOD-002",
   "type": "User Story",
   "priority": "P1",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "us/US-007-clipboard-condivisa-hyprland-android",
   "dependencies": [
     "SPIKE-004",
@@ -28,5 +28,8 @@
     "Dopo un riavvio della VM la condivisione funziona ancora senza interventi manuali.",
     "Il ritorno a Weston (./install.sh --session weston) funziona ancora e non lascia alias di wayland-0 verso un socket inesistente.",
     "Test bats per le nuove funzioni pure; il README documenta la clipboard condivisa e il limite del cambio di focus."
-  ]
+  ],
+  "outcome": "All'avvio di Hyprland hyprland.lua esegue session-socket link, che rende /run/user/1000/wayland-0 un link al socket di Hyprland (decisione chiusa in design/session: Hyprland 0.55 rifiuta --socket senza --wayland-fd); start-session, ExecStopPost e ./install.sh --session weston tolgono il link; l'unità ferma weston.socket rimasta attiva (difetto trovato nella prova: al ritorno a Weston nella stessa accensione Weston apriva solo wayland-1). Verificato sulla VM: Android -> foot e foot -> Android osservati dall'utente, anche dopo il riavvio della VM dall'app; journal di linux_vm_manager senza errori wl-copy/wl-paste; ripiego su Weston simulato (Weston visibile, link tolto, clipboard non condivisa: limite documentato); ritorno a Weston (solo sfondo, come l'originale, wayland-0 servito da weston.socket, nessun alias pendente) e rientro in Hyprland; install.sh due volte senza modifiche; file di REQ-NFR-002 invariati. Gate verde sulla VM (shellcheck, verify-config, 52 test bats).",
+  "changelog": "Added: clipboard di testo condivisa tra le app Android e la sessione Hyprland, nei due versi",
+  "closed_at": "2026-11-26"
 }
