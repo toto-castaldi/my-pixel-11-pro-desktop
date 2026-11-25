@@ -9,13 +9,14 @@
   "branch": "task/TEC-004-ambiente-sviluppo-dock-adb-wifi",
   "dependencies": [],
   "design_references": [
+    "design/dev-environment",
     "design/test-strategy"
   ],
-  "description": "Documenta il setup di lavoro ricorrente: il Pixel 11 Pro è collegato via USB a un dock con monitor, tastiera e mouse, quindi adb dal portatile crilin raggiunge il telefono via Wi-Fi e l'agente su walle entra nella VM con ssh attraverso crilin. Il nuovo topic design/dev-environment nasce con l'item.",
+  "description": "Documenta il setup di lavoro ricorrente: il Pixel 11 Pro è collegato via USB a un dock con monitor, tastiera e mouse, quindi adb lo raggiunge via Wi-Fi da un host adb (collegato via USB o sulla stessa rete Wi-Fi) e l'host di sviluppo entra nella VM con ssh attraverso l'host adb. Il nuovo topic design/dev-environment nasce con l'item.",
   "acceptance_criteria": [
-    "docs/design/dev-environment.md descrive la topologia (walle, crilin, telefono su dock, VM), il passaggio di adb a Wi-Fi (adb tcpip 5555 e adb connect) e il recupero dopo riavvio del telefono o cambio di IP",
-    "Il file descrive la configurazione ssh di walle (host crilin e pixel con ProxyCommand su adb via Wi-Fi) senza segreti",
-    "ssh pixel funziona con il telefono collegato al dock e senza cavo USB verso crilin",
+    "docs/design/dev-environment.md descrive la topologia (host di sviluppo, host adb, telefono su dock, VM), il passaggio di adb a Wi-Fi (adb tcpip 5555 e adb connect) e il recupero dopo riavvio del telefono o cambio di IP",
+    "Il file descrive la configurazione ssh dell'host di sviluppo (host adb e pixel con ProxyCommand su adb) con soli segnaposto: nessun hostname, IP, utente, seriale o segreto",
+    "ssh pixel funziona con il telefono collegato al dock e senza cavo USB verso l'host adb",
     "design/test-strategy rimanda all'ambiente di sviluppo per le prove sulla VM"
   ]
 }
