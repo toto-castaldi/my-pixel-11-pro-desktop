@@ -12,7 +12,6 @@ In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione avv
 
 - Un Pixel con l'app Terminal di Android e il display grafico attivo.
 - Nella VM: utente `droid` con `sudo` e accesso a internet.
-- Un account GitHub, per registrare la chiave SSH della VM.
 
 ## Installazione
 
@@ -31,21 +30,11 @@ Su una VM appena creata o reimpostata, i comandi si danno nella vista testuale (
    sudo passwd droid
    ```
 
-3. Preparare l'accesso a GitHub: creare una chiave SSH della VM, aggiungere la chiave pubblica stampata dal secondo comando su GitHub (Settings → SSH and GPG keys → New SSH key) e provare la connessione, accettando l'impronta dell'host di GitHub:
-
-   ```bash
-   ssh-keygen -t ed25519
-   cat ~/.ssh/id_ed25519.pub
-   ssh -T git@github.com
-   ```
-
-   La chiave privata resta in `~/.ssh/` della VM e non va mai copiata nel repository.
-
-4. Clonare il repository nella home ed eseguire lo script:
+3. Clonare il repository nella home ed eseguire lo script (il repository è pubblico: il clone via HTTPS non richiede chiavi né un account GitHub):
 
    ```bash
    cd ~
-   git clone git@github.com:toto-castaldi/my-pixel-11-pro-desktop.git
+   git clone https://github.com/toto-castaldi/my-pixel-11-pro-desktop.git
    cd my-pixel-11-pro-desktop
    ./install.sh
    ```
