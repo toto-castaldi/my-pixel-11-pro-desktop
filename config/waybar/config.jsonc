@@ -1,0 +1,28 @@
+// Waybar configuration: workspaces on the left, clock on the right
+// (REQ-DSK-001). Started by Hyprland at session start (design/desktop).
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["hyprland/language", "clock"],
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true
+    },
+    "hyprland/window": {
+        "max-length": 60,
+        "separate-outputs": true
+    },
+    "hyprland/language": {
+        "format": "⌨ {short}"
+    },
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%d/%m/%Y  %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>"
+    }
+}
