@@ -111,3 +111,46 @@ setup() {
 	run core_mask_action file ""
 	[ "$output" = "backup" ]
 }
+
+@test "parse_args: --session weston and --session hyprland" {
+	run core_parse_args --session weston
+	[ "$output" = "weston" ]
+	run core_parse_args --session hyprland
+	[ "$output" = "install" ]
+}
+
+@test "parse_args: --session without a valid name is an error" {
+	run core_parse_args --session
+	[ "$output" = "error:--session" ]
+	run core_parse_args --session kde
+	[ "$output" = "error:--session kde" ]
+	run core_parse_args --session weston extra
+	[ "$output" = "error:extra" ]
+	run core_parse_args --help extra
+	[ "$output" = "error:extra" ]
+}
+
+@test "usage mentions --session" {
+	run core_usage
+	[[ "$output" == *"--session weston"* ]]
+	[[ "$output" == *"--session hyprland"* ]]
+}
+
+@test "unlink_action: nothing there is skipped" {
+	run core_unlink_action missing "" /dev/null
+	[ "$output" = "skip" ]
+}
+
+@test "unlink_action: the project's link is removed" {
+	run core_unlink_action link /repo/systemd/weston.service /repo/systemd/weston.service
+	[ "$output" = "remove" ]
+	run core_unlink_action link /dev/null /dev/null
+	[ "$output" = "remove" ]
+}
+
+@test "unlink_action: other links and files are kept" {
+	run core_unlink_action link /elsewhere/weston.service /repo/systemd/weston.service
+	[ "$output" = "keep" ]
+	run core_unlink_action file "" /dev/null
+	[ "$output" = "keep" ]
+}

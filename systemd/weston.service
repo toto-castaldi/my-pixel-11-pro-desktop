@@ -1,8 +1,8 @@
 # User override of /etc/systemd/user/weston.service (linked by install.sh).
 # The Android Terminal app runs "systemctl --user start weston": this unit
 # starts Hyprland instead of Weston, or Weston when Hyprland is missing.
-# Back to Weston: remove ~/.config/systemd/user/weston.service and
-# ~/.config/systemd/user/weston.socket, then systemctl --user daemon-reload.
+# Back to Weston: ./install.sh --session weston (removes this link and the
+# mask of weston.socket); back to Hyprland: ./install.sh --session hyprland.
 [Unit]
 Description=Sessione grafica: Hyprland al posto di Weston
 Before=graphical-session.target

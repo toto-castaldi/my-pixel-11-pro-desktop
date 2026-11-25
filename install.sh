@@ -10,6 +10,23 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/effects.sh
 . "$REPO_DIR/lib/effects.sh"
 
+# Back to the Weston session of the Terminal app: remove the override unit
+# and the mask of weston.socket. Packages and the other dotfiles stay.
+session_weston() {
+	effects_unlink "$HOME" .config/systemd/user/weston.service "$REPO_DIR/systemd/weston.service"
+	effects_unlink "$HOME" .config/systemd/user/weston.socket /dev/null
+	effects_reload_units
+	effects_forget_session_env
+
+	if [ "$EFFECTS_CHANGES" -eq 0 ]; then
+		effects_log "Nessuna modifica: la sessione è già Weston."
+	else
+		effects_log "Fatto: $EFFECTS_CHANGES modifiche. Alla prossima apertura del display parte Weston."
+		effects_log "Per passare subito a Weston: systemctl --user restart weston (o riavvia la VM)."
+	fi
+	effects_log "Per tornare a Hyprland: ./install.sh --session hyprland"
+}
+
 main() {
 	local action
 	action="$(core_parse_args "$@")"
@@ -24,6 +41,11 @@ main() {
 			return 2
 			;;
 	esac
+
+	if [ "$action" = "weston" ]; then
+		session_weston
+		return 0
+	fi
 
 	local stamp
 	stamp="$(date +%Y%m%d%H%M%S)"

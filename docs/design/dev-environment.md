@@ -30,6 +30,8 @@ adb devices -l                                    # compare anche <IP_TELEFONO>:
 
 Poi si scollega il cavo e si collega il telefono al dock. La connessione TCP resta finché il telefono non si riavvia.
 
+Dopo aver spostato il telefono sul dock si spegne e si riaccende la VM dall'app Terminal, altrimenti la vista grafica non passa sul monitor. Il riavvio chiude i processi nella VM; la sessione Hyprland riparte da sola.
+
 ## Configurazione ssh dell'host di sviluppo
 
 In `~/.ssh/config` dell'host di sviluppo (non versionato):

@@ -15,19 +15,42 @@ una copia di backup di ogni file sostituito. È rieseguibile: una seconda
 esecuzione non cambia nulla.
 
 Opzioni:
-  -h, --help    mostra questo messaggio ed esce senza modificare il sistema
+  --session weston    torna alla sessione Weston dell'app Terminal: toglie
+                      l'unità weston.service del progetto e la maschera di
+                      weston.socket; non installa né rimuove pacchetti
+  --session hyprland  torna alla sessione Hyprland: equivale a ./install.sh
+  -h, --help          mostra questo messaggio ed esce senza modificare il sistema
+
+Il cambio di sessione ha effetto alla successiva apertura del display, o
+subito con: systemctl --user restart weston
 EOF
 }
 
-# Parse the command line. Prints the action: "help", "install" or
-# "error:<argument>" for an unknown argument.
+# Parse the command line. Prints the action: "help", "install",
+# "weston" (remove the override) or "error:<argument>" for an unknown or
+# incomplete argument. "--session hyprland" is the same as no arguments.
 core_parse_args() {
 	if [ "$#" -eq 0 ]; then
 		echo "install"
 		return 0
 	fi
 	case "$1" in
-		-h | --help) echo "help" ;;
+		-h | --help)
+			[ "$#" -eq 1 ] && echo "help" || echo "error:$2"
+			;;
+		--session)
+			if [ "$#" -lt 2 ]; then
+				echo "error:$1"
+			elif [ "$#" -gt 2 ]; then
+				echo "error:$3"
+			else
+				case "$2" in
+					weston) echo "weston" ;;
+					hyprland) echo "install" ;;
+					*) echo "error:$1 $2" ;;
+				esac
+			fi
+			;;
 		*) echo "error:$1" ;;
 	esac
 }
@@ -130,5 +153,25 @@ core_mask_action() {
 		skip) echo "skip" ;;
 		link) echo "mask" ;;
 		*) echo "backup" ;;
+	esac
+}
+
+# Decide what to do with an entry the project created under $HOME, when
+# removing it (kind and current as in core_link_action; expected is the
+# link destination the project wrote). Prints "skip" (nothing there),
+# "remove" (the project's link) or "keep" (any other entry: it belongs to
+# the user and is left alone).
+core_unlink_action() {
+	local kind="$1" current="$2" expected="$3"
+	case "$kind" in
+		missing) echo "skip" ;;
+		link)
+			if [ "$current" = "$expected" ]; then
+				echo "remove"
+			else
+				echo "keep"
+			fi
+			;;
+		*) echo "keep" ;;
 	esac
 }

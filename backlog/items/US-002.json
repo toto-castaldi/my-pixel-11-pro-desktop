@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "User Story",
   "priority": "P1",
-  "status": "Todo",
+  "status": "Done",
+  "branch": "us/US-002-ritorno-a-weston",
   "dependencies": [
     "US-001"
   ],
@@ -21,5 +22,8 @@
     "Un comando documentato nel README (es. install.sh --session weston) rimuove l'override e riattiva weston.socket.",
     "Dopo il comando e la riapertura del display, Weston è di nuovo il compositor; il comando inverso riporta Hyprland.",
     "Il comando è idempotente: eseguito due volte di seguito non produce errori né modifiche."
-  ]
+  ],
+  "outcome": "install.sh --session weston toglie il link di weston.service e la maschera di weston.socket (solo se creati dal progetto) e toglie WAYLAND_DISPLAY e DISPLAY dall'ambiente del manager utente; --session hyprland equivale a ./install.sh. Verifiche: gate (shellcheck, Hyprland --verify-config, bats 25 test) superato sulla VM; sulla VM, --session weston + restart: unità di sistema di Weston attiva e l'utente ha osservato Weston sul monitor; --session hyprland + restart: l'utente ha osservato di nuovo Hyprland. Idempotenza: ogni comando eseguito due volte, la seconda stampa Nessuna modifica (anche in una HOME di prova, con file estraneo lasciato con avviso). File di REQ-NFR-002 invariati (sha256). Prima del fix il restart di Weston falliva perché Hyprland lascia WAYLAND_DISPLAY nell'ambiente del manager.",
+  "changelog": "Added: ./install.sh --session weston e --session hyprland per tornare alla sessione Weston dell'app Terminal e poi a Hyprland",
+  "closed_at": "2026-11-25"
 }
