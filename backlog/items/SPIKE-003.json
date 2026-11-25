@@ -6,7 +6,8 @@
   "module": "MOD-003",
   "type": "Spike",
   "priority": "P1",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "spike/SPIKE-003-audio-nella-vm",
   "dependencies": [],
   "design_references": [
     "design/desktop"
