@@ -6,7 +6,7 @@ L'app Terminal esegue una VM Debian 13 (trixie, aarch64) e ne mostra il display 
 
 ## Stato
 
-Versione **v0.1.0** rilasciata, v0.2.0 in sviluppo. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana, scorciatoie, sfondo, blocco schermo, notifiche, screenshot, cronologia della clipboard e clipboard condivisa con Android. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
+Versione **v0.2.0** rilasciata. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana, scorciatoie, sfondo, blocco schermo, notifiche, screenshot, cronologia della clipboard e clipboard condivisa con Android. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
 
 ## Prerequisiti
 

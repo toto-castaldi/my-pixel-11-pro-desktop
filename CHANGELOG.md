@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-26
+
+### Added
+
+- clipboard di testo condivisa tra le app Android e la sessione Hyprland, nei due versi (US-007)
+
 ## [0.1.0] - 2026-11-25
 
 ### Added

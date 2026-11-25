@@ -1,6 +1,6 @@
 # Requirements — my-pixel-11-pro-desktop
 
-**Target version:** v0.2.0
+**Target version:** nessuna versione aperta
 
 **State:** baseline
 
@@ -15,7 +15,7 @@ The *what* of the project, one file per requirement (`docs/process/docs.md` §1)
 
 ## Goal
 
-Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile). La v0.2.0 è riuscita quando il testo copiato in un'app Android si incolla nella sessione Hyprland e viceversa, attraverso il canale della clipboard dell'app Terminal, senza perdere nulla del desktop esistente.
+Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile).
 
 ## Actors
 
@@ -23,20 +23,7 @@ Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un des
 
 ## Scope
 
-### In scope for v0.2.0
-
-- Clipboard di testo condivisa nei due versi tra la sessione Hyprland e le app Android (REQ-DSK-005), anche dopo un riavvio della VM, senza perdere il ritorno a Weston.
-
-### Out of scope for v0.2.0
-
-Do not introduce these without first updating the requirements and the backlog:
-
-- Condivisione di immagini o altri contenuti non testuali nella clipboard.
-- Controllo del volume (REQ-DSK-004).
-- Tema grafico coordinato tra le applicazioni.
-- Applicazioni desktop aggiuntive (browser, file manager, editor) e ambienti di sviluppo.
-- Profili di schermo diversi per telefono e monitor esterno.
-- Modifiche ai file di sistema gestiti dall'app Terminal.
+Nessuna versione è aperta: scope e accettazione si definiscono quando se ne apre una. Le capacità già rilasciate sono descritte dai requisiti.
 
 ## Areas
 
