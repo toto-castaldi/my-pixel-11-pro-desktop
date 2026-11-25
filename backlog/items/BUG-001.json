@@ -1,0 +1,31 @@
+{
+  "id": "BUG-001",
+  "title": "Il ritorno a Weston fallisce: WAYLAND_DISPLAY torna nell'ambiente quando Hyprland si ferma",
+  "version": "v0.1.0",
+  "epic": "EPIC-002",
+  "module": "MOD-002",
+  "type": "Bug",
+  "priority": "P0",
+  "status": "Todo",
+  "dependencies": [
+    "US-002"
+  ],
+  "requirements": [
+    "REQ-SES-002"
+  ],
+  "design_references": [
+    "design/session"
+  ],
+  "description": "Il comando documentato per tornare a Weston non funziona più sulla sessione completa del desktop: la pulizia dell'ambiente avviene prima che la sessione Hyprland si fermi.",
+  "found_in": "v0.1.0",
+  "steps_to_reproduce": "Con la sessione Hyprland attiva (installazione completa su VM reimpostata): ./install.sh --session weston, poi systemctl --user restart weston.",
+  "expected": "Parte Weston dell'unità di sistema e il display mostra Weston, come documentato nel README.",
+  "actual": "weston.service fallisce con 'Failed to connect to parent Wayland compositor' (WAYLAND_DISPLAY=wayland-1, backend wayland) e il display resta vuoto. install.sh toglie WAYLAND_DISPLAY e DISPLAY dall'ambiente del manager utente mentre Hyprland è ancora attivo, ma le variabili ricompaiono quando la sessione Hyprland si ferma durante il restart; togliendole a mano dopo l'arresto Weston parte.",
+  "acceptance_criteria": [
+    "Con la sessione Hyprland completa attiva, ./install.sh --session weston seguito dal comando documentato nel README porta il display a Weston, osservato dall'utente sul monitor.",
+    "./install.sh --session hyprland seguito dal comando documentato riporta Hyprland, osservato dall'utente.",
+    "Dopo l'arresto della sessione Hyprland l'ambiente del manager systemd utente non contiene WAYLAND_DISPLAY né DISPLAY lasciati da Hyprland, anche quando la sessione si ferma per un riavvio o per l'uscita con Ctrl+Alt+Q.",
+    "Test di regressione bats sulla parte pura della correzione (per esempio i comandi o le righe dell'unità che puliscono l'ambiente all'arresto).",
+    "README e design/session descrivono il comportamento corretto."
+  ]
+}
