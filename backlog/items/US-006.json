@@ -6,7 +6,7 @@
   "module": "MOD-001",
   "type": "User Story",
   "priority": "P1",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "us/US-006-installazione-completa-vm-pulita",
   "dependencies": [
     "US-002",
@@ -27,5 +27,8 @@
     "Una seconda esecuzione di install.sh non modifica file e non crea backup, come mostra il riepilogo.",
     "Un file preesistente diverso dal link atteso viene salvato in backup prima di essere sostituito.",
     "Nessun segreto (chiavi, token) viene creato o copiato nel repository dallo script."
-  ]
+  ],
+  "outcome": "Prova end-to-end su VM reimpostata dall'utente seguendo solo il README del ramo. Correzioni al README emerse: mancavano apt-get update e l'installazione di git (assente nell'immagine), la password di droid per hyprlock e il clone nella home; su indicazione dell'utente il clone è via HTTPS (repo pubblico, nessuna chiave): aggiornati REQ-NFR-001, acceptance.md, design/security.md e design/install.md; in design/dev-environment.md il ripristino di ssh dopo un reset e il percorso reale di Port 2222. Verificato via ssh: install.sh completato dall'utente (Hyprland 0.55.2, tutti i link e la maschera di weston.socket presenti); seconda esecuzione 'Nessuna modifica', nessun .bak; un file normale al posto di ~/.config/mako/config salvato in .bak-<data> e sostituito dal link, poi di nuovo 'Nessuna modifica' (backup di prova rimosso); clone senza file non tracciati né ignorati (nessun segreto); sha256 e mtime dei 5 file di REQ-NFR-002 identici a prima dell'installazione; dopo systemctl --user restart weston Hyprland con renderer zink su Vulkan (PowerVR), waybar, swaybg, mako attivi, 2 screenshot e voci cliphist presenti. Osservato dall'utente sul monitor: barra, terminale, tastiera italiana, launcher, scorciatoie, sfondo, blocco e sblocco, notifica, screenshot intero e d'area, incolla dalla cronologia. Gate completo sulla VM superato (41 test bats). Non verificato qui: output testuale del primo giro di install.sh (non visto, l'utente ha riferito il completamento) e se l'immagine imposti già una password per droid (dopo il reset risultava impostata; il passo 2 è stato comunque mantenuto). Riavvio completo e ritorno a Weston non sono criteri di questo item.",
+  "changelog": "Changed: il README guida l'installazione completa su una VM reimpostata, con clone via HTTPS senza chiavi",
+  "closed_at": "2026-11-25"
 }
