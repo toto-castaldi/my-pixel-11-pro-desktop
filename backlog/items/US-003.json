@@ -6,7 +6,7 @@
   "module": "MOD-003",
   "type": "User Story",
   "priority": "P1",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "us/US-003-desktop-base",
   "dependencies": [
     "US-001",
@@ -24,5 +24,8 @@
     "All'avvio della sessione waybar è visibile e mostra workspace e ora.",
     "Le scorciatoie documentate nel README aprono terminale e launcher, chiudono la finestra, cambiano workspace ed escono, usando il modificatore raccomandato da SPIKE-001.",
     "Il layout di tastiera attivo è it (verificato con hyprctl devices)."
-  ]
+  ],
+  "outcome": "Consegnati config/hypr/hyprland.lua (Lua hl.*, tastiera it, blur off, autostart dbus-update-activation-environment e waybar, scorciatoie ALT e CTRL+ALT+Q per uscire), config/waybar/ (workspace, finestra, layout, ora), config/foot/foot.ini e config/fuzzel/fuzzel.ini, collegati da config/links.list; waybar, fuzzel, fonts-dejavu-core e dbus-bin in packages/base.list; 8 test in tests/config.bats; README e design/desktop aggiornati. Verificato sulla VM: gate completo superato (Hyprland --verify-config: config ok, 33 test bats); primo install.sh 5 link con backup della vecchia hyprland.lua, secondo install.sh 'Nessuna modifica'; hyprctl devices: layout it, keymap Italian; hyprctl configerrors vuoto, waybar come layer top. Osservato dall'utente sul monitor del dock: barra con workspace e ora, Alt+Invio foot, AltGr e accentati corretti, Alt+Spazio fuzzel, Alt+1..3 e Alt+Maiusc+3, Alt+Q e Alt+F4 chiudono, Ctrl+Alt+Q esce; sessione riavviata con systemctl --user start weston. File di REQ-NFR-002 invariati (sha256 e mtime).",
+  "changelog": "Added: desktop base con barra waybar, launcher fuzzel, terminale foot, tastiera italiana e scorciatoie Alt",
+  "closed_at": "2026-11-25"
 }
