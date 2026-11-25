@@ -20,4 +20,8 @@ if [ "$present" = "yes" ]; then
 else
 	echo "$start_hyprland non trovato: avvio Weston: ${cmd[*]}"
 fi
+# The compositor always runs on DRM. A previous Hyprland session leaves
+# WAYLAND_DISPLAY and DISPLAY in the user manager environment, and with
+# them Weston would try to run nested and fail.
+unset WAYLAND_DISPLAY DISPLAY
 exec "${cmd[@]}"
