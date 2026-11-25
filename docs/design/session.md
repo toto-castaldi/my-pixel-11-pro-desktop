@@ -6,4 +6,10 @@ Il progetto non modifica quei file: definisce in `~/.config/systemd/user/` un `w
 
 Hyprland non può girare annidato dentro Weston 14: richiede `wl_compositor` versione 6, Weston offre la 5.
 
-Comportamento di input, riavvio e aggiornamenti dell'app: definiti da SPIKE-001 e SPIKE-002.
+## Input
+
+L'app Terminal espone alla VM quattro dispositivi virtio di crosvm, che Hyprland legge con libinput: tastiera, mouse relativo, touchscreen multitouch e trackpad multitouch. Tastiera e mouse arrivano solo dalla vista grafica (Display) dell'app e solo quando la sua finestra ha il focus di Android. Nella vista testuale i tasti vanno alla shell e non a Hyprland.
+
+La tastiera virtio non ha i tasti SUPER/Meta: Meta lo prende Android, che toglie il focus alla finestra. Android consuma anche Tab, e quindi Alt+Tab. Alt, Ctrl (sinistri e destri), AltGr, Caps Lock, Esc, i tasti funzione e Print (keysym `Print`) arrivano a Hyprland. Il touch dello schermo del telefono arriva come touch assoluto.
+
+Comportamento al riavvio e agli aggiornamenti dell'app: definito da SPIKE-002.

@@ -9,3 +9,4 @@ A spike is a backlog item of type `Spike` (`SPIKE-NNN`) that answers explicit qu
 
 | Spike | Title | Outcome |
 | ----- | ----- | ------- |
+| [SPIKE-001](SPIKE-001-input-android.md) | Input su Android: tasto SUPER, touch e trackpad | Partial |
