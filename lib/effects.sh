@@ -4,6 +4,8 @@
 
 # Number of changes made in this run, reported at the end.
 EFFECTS_CHANGES=0
+# 1 when a user systemd unit was linked or masked in this run.
+EFFECTS_UNITS_CHANGED=0
 
 effects_log() {
 	printf '==> %s\n' "$*"
@@ -60,8 +62,49 @@ effects_link_dotfiles() {
 				;;
 		esac
 		effects_log "Collego $dst -> $src"
+		case "$dst" in
+			*/.config/systemd/user/*) EFFECTS_UNITS_CHANGED=1 ;;
+		esac
 		mkdir -p "$(dirname "$dst")"
 		ln -s "$src" "$dst"
 		EFFECTS_CHANGES=$((EFFECTS_CHANGES + 1))
 	done < <(core_list_entries <"$manifest")
+}
+
+# Mask the user unit <name> in <home>/.config/systemd/user/ with a link to
+# /dev/null, as "systemctl --user mask" does, backing up any other entry.
+effects_mask_unit() {
+	local home="$1" name="$2" stamp="$3"
+	local dst kind current action backup
+	dst="$(core_link_target "$home" ".config/systemd/user/$name")"
+	current=""
+	if [ -L "$dst" ]; then
+		kind="link"
+		current="$(readlink "$dst")"
+	elif [ -e "$dst" ]; then
+		kind="file"
+	else
+		kind="missing"
+	fi
+	action="$(core_mask_action "$kind" "$current")"
+	case "$action" in
+		skip) return 0 ;;
+		backup)
+			backup="$(core_backup_path "$dst" "$stamp")"
+			effects_log "Backup di $dst in $backup"
+			mv "$dst" "$backup"
+			;;
+	esac
+	effects_log "Maschero $name"
+	mkdir -p "$(dirname "$dst")"
+	ln -s /dev/null "$dst"
+	EFFECTS_CHANGES=$((EFFECTS_CHANGES + 1))
+	EFFECTS_UNITS_CHANGED=1
+}
+
+# Reload the user systemd manager when units changed in this run.
+effects_reload_units() {
+	[ "$EFFECTS_UNITS_CHANGED" -eq 1 ] || return 0
+	effects_log "Ricarico le unità systemd utente"
+	systemctl --user daemon-reload
 }

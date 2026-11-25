@@ -84,3 +84,30 @@ setup() {
 	run core_link_action file "" /repo/a
 	[ "$output" = "backup" ]
 }
+
+@test "session_command: Hyprland when start-hyprland is present" {
+	run core_session_command /usr/bin/start-hyprland yes
+	[ "$output" = "/usr/bin/start-hyprland" ]
+}
+
+@test "session_command: Weston with the system unit command when start-hyprland is missing" {
+	run core_session_command /usr/bin/start-hyprland no
+	[ "$output" = "/usr/bin/weston --modules=systemd-notify.so --xwayland --continue-without-input" ]
+}
+
+@test "mask_action: missing unit is masked" {
+	run core_mask_action missing ""
+	[ "$output" = "mask" ]
+}
+
+@test "mask_action: masked unit is skipped (idempotence)" {
+	run core_mask_action link /dev/null
+	[ "$output" = "skip" ]
+}
+
+@test "mask_action: other link or file is backed up" {
+	run core_mask_action link /elsewhere
+	[ "$output" = "backup" ]
+	run core_mask_action file ""
+	[ "$output" = "backup" ]
+}

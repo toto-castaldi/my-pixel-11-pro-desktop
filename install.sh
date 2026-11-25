@@ -25,13 +25,20 @@ main() {
 			;;
 	esac
 
+	local stamp
+	stamp="$(date +%Y%m%d%H%M%S)"
 	effects_install_packages "$REPO_DIR/packages"
-	effects_link_dotfiles "$REPO_DIR" "$HOME" "$REPO_DIR/config/links.list" "$(date +%Y%m%d%H%M%S)"
+	effects_link_dotfiles "$REPO_DIR" "$HOME" "$REPO_DIR/config/links.list" "$stamp"
+	effects_mask_unit "$HOME" weston.socket "$stamp"
+	effects_reload_units
 
 	if [ "$EFFECTS_CHANGES" -eq 0 ]; then
 		effects_log "Nessuna modifica: il sistema è già configurato."
 	else
 		effects_log "Fatto: $EFFECTS_CHANGES modifiche."
+	fi
+	if [ "$EFFECTS_UNITS_CHANGED" -eq 1 ]; then
+		effects_log "Per avviare la nuova sessione: systemctl --user restart weston (o riavvia la VM)."
 	fi
 }
 

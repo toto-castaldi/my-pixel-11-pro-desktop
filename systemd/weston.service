@@ -1,0 +1,20 @@
+# User override of /etc/systemd/user/weston.service (linked by install.sh).
+# The Android Terminal app runs "systemctl --user start weston": this unit
+# starts Hyprland instead of Weston, or Weston when Hyprland is missing.
+# Back to Weston: remove ~/.config/systemd/user/weston.service and
+# ~/.config/systemd/user/weston.socket, then systemctl --user daemon-reload.
+[Unit]
+Description=Sessione grafica: Hyprland al posto di Weston
+Before=graphical-session.target
+Wants=dbus.socket
+After=dbus.socket
+
+[Service]
+Type=simple
+EnvironmentFile=-%h/weston.env
+Environment=XDG_SESSION_TYPE=wayland
+Environment=XDG_CURRENT_DESKTOP=Hyprland
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus
+ExecStart=%h/.local/libexec/my-pixel-11-pro-desktop/start-session
+StandardOutput=journal
+StandardError=journal
