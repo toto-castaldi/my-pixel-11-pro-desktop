@@ -19,8 +19,11 @@
   ],
   "description": "Come utente, voglio uno sfondo, il blocco schermo e le notifiche, per avere un desktop completo.",
   "acceptance_criteria": [
-    "All'avvio della sessione hyprpaper mostra lo sfondo versionato in config/.",
+    "All'avvio della sessione swaybg mostra lo sfondo versionato in config/.",
     "La scorciatoia documentata blocca lo schermo con hyprlock e la password dell'utente lo sblocca.",
     "notify-send \"prova\" mostra una notifica di mako nella sessione."
+  ],
+  "remarks": [
+    "hyprpaper 0.8.4 (trixie-backports) non funziona sulla GPU virtualizzata: hyprtoolkit alloca buffer AB4H (vkFormat 0x61) non supportati da gfxstream e va in asserzione; con rendering software si blocca. Con l'accordo dell'utente lo sfondo usa swaybg (trixie main, wl_shm): aggiornati REQ-DSK-002, scope, design/desktop, AGENTS.md §4 e il primo criterio."
   ]
 }

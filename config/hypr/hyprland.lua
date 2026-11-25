@@ -21,6 +21,9 @@ hl.monitor({
 local terminal = "foot"
 local menu     = "fuzzel"
 local locker   = "pidof hyprlock || hyprlock"
+-- swaybg draws on the CPU (wl_shm): hyprpaper 0.8 needs a GPU buffer format
+-- (AB4H) that gfxstream does not support (design/desktop).
+local wallpaper = "swaybg -m fill -i ~/.config/hypr/wallpaper.png"
 
 -------------------
 ---- AUTOSTART ----
@@ -30,7 +33,7 @@ hl.on("hyprland.start", function()
     -- Make the session visible to D-Bus activated and systemd user services.
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE DISPLAY")
     hl.exec_cmd("waybar")
-    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd(wallpaper)
     hl.exec_cmd("mako")
 end)
 

@@ -63,3 +63,40 @@ setup() {
 	grep -q '"hyprland/workspaces"' "$REPO/config/waybar/config.jsonc"
 	grep -q '"clock"' "$REPO/config/waybar/config.jsonc"
 }
+
+@test "links.list: wallpaper, lock screen and notifications are linked (US-004)" {
+	run core_list_entries <"$REPO/config/links.list"
+	[[ "$output" == *"config/hypr/wallpaper.png .config/hypr/wallpaper.png"* ]]
+	[[ "$output" == *"config/hypr/hyprlock.conf .config/hypr/hyprlock.conf"* ]]
+	[[ "$output" == *"config/mako/config .config/mako/config"* ]]
+}
+
+@test "packages: swaybg, mako and notify-send from trixie, hyprlock from backports, no hyprpaper" {
+	run core_list_entries <"$REPO/packages/base.list"
+	[[ "$output" == *"swaybg"* ]]
+	[[ "$output" == *"mako-notifier"* ]]
+	[[ "$output" == *"libnotify-bin"* ]]
+	run core_list_entries <"$REPO/packages/hyprland.backports.list"
+	[[ "$output" == *"hyprlock"* ]]
+	run grep -q hyprpaper "$REPO/packages/base.list" "$REPO/packages/hyprland.backports.list" "$REPO/config/links.list"
+	[ "$status" -eq 1 ]
+}
+
+@test "wallpaper: the versioned image is a PNG" {
+	run head -c 8 "$REPO/config/hypr/wallpaper.png"
+	[[ "$output" == $'\x89PNG'* ]]
+}
+
+@test "hyprland.lua: wallpaper and notifications start with the session, CTRL + ALT + L locks" {
+	grep -q 'local wallpaper = "swaybg -m fill -i ~/.config/hypr/wallpaper.png"' "$HYPR"
+	grep -q 'hl.exec_cmd(wallpaper)' "$HYPR"
+	grep -q 'hl.exec_cmd("mako")' "$HYPR"
+	grep -q 'hl.bind("CTRL + ALT + L",       hl.dsp.exec_cmd(locker)' "$HYPR"
+	grep -q 'local locker   = "pidof hyprlock || hyprlock"' "$HYPR"
+}
+
+@test "hyprlock.conf: wallpaper background without blur and a password field" {
+	grep -q 'path = ~/.config/hypr/wallpaper.png' "$REPO/config/hypr/hyprlock.conf"
+	grep -q 'blur_passes = 0' "$REPO/config/hypr/hyprlock.conf"
+	grep -q '^input-field {' "$REPO/config/hypr/hyprlock.conf"
+}

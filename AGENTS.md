@@ -34,7 +34,7 @@ Unless a different decision is recorded in the backlog and in the technical desi
 
 - Bash for `install.sh` and `lib/*.sh`; Lua for the Hyprland configuration (API `hl.*` of Hyprland 0.55)
 - apt (Debian trixie and `trixie-backports`)
-- Hyprland 0.55, waybar, fuzzel, foot, hyprpaper, hyprlock, mako, grim, slurp, cliphist
+- Hyprland 0.55, waybar, fuzzel, foot, swaybg, hyprlock, mako, grim, slurp, cliphist
 - no database; state is the files under `$HOME`
 - shellcheck, bats
 - the Terminal app VM itself, user-level systemd units

@@ -38,6 +38,12 @@ oppure riavviare la VM. Se Hyprland non è installato, la stessa unità avvia We
 
 All'avvio della sessione compare in alto la barra (waybar) con i workspace, il titolo della finestra attiva, il layout di tastiera e l'ora; un clic sull'ora mostra anche la data. Il layout di tastiera è italiano (`it`); AltGr resta disponibile per `@`, `#`, `[` e `]`.
 
+Lo sfondo è `config/hypr/wallpaper.png`, mostrato da swaybg: è un gradiente generato per questo progetto e rilasciato in pubblico dominio ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)). Per cambiarlo basta sostituire il file nel clone e riavviare la sessione. Le notifiche delle applicazioni compaiono in alto a destra (mako) e si chiudono da sole dopo 5 secondi o con un clic; per provarle:
+
+```bash
+notify-send "prova"
+```
+
 Tastiera e mouse arrivano a Hyprland solo dalla vista grafica (Display) dell'app Terminal, e solo dopo aver cliccato dentro la sua finestra. Il tasto SUPER (Meta) e il tasto Tab li prende Android: per questo le scorciatoie usano `Alt`.
 
 | Scorciatoia | Azione |
@@ -52,6 +58,7 @@ Tastiera e mouse arrivano a Hyprland solo dalla vista grafica (Display) dell'app
 | `Alt + Maiusc + 1` … `Alt + Maiusc + 0` | sposta la finestra attiva nel workspace da 1 a 10 |
 | `Alt + rotella del mouse` | passa al workspace successivo o precedente |
 | `Alt + tasto sinistro` / `Alt + tasto destro`, trascinando | sposta / ridimensiona la finestra |
+| `Ctrl + Alt + L` | blocca lo schermo (hyprlock); si sblocca digitando la password dell'utente e Invio |
 | `Ctrl + Alt + Q` | esce dalla sessione Hyprland |
 
 Dopo l'uscita il display resta vuoto finché la sessione non riparte: si riapre il display dall'app Terminal, oppure da una shell della VM:
@@ -60,7 +67,7 @@ Dopo l'uscita il display resta vuoto finché la sessione non riparte: si riapre 
 systemctl --user start weston
 ```
 
-I dotfile del desktop stanno in `config/` e sono collegati in `~/.config/` con link simbolici: una modifica nel clone vale per Hyprland dopo `hyprctl reload` e per waybar, foot e fuzzel alla loro riapertura.
+I dotfile del desktop stanno in `config/` e sono collegati in `~/.config/` con link simbolici: una modifica nel clone vale per Hyprland dopo `hyprctl reload` e per waybar, foot, fuzzel, hyprlock e mako alla loro riapertura (`makoctl reload` per mako).
 
 ## Dopo un aggiornamento dell'app Terminal
 

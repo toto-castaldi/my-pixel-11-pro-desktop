@@ -27,7 +27,7 @@ Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un des
 
 - Hyprland come compositor del display del Terminal al posto di Weston, con accelerazione GPU, e ritorno a Weston con un comando.
 - Desktop base: waybar, fuzzel, foot, tastiera italiana, scorciatoie compatibili con l'input di Android.
-- Sfondo (hyprpaper), blocco schermo (hyprlock), notifiche (mako).
+- Sfondo (swaybg), blocco schermo (hyprlock), notifiche (mako).
 - Screenshot (grim, slurp), cronologia della clipboard.
 - `install.sh` rieseguibile che installa i pacchetti, collega i dotfile con link simbolici e fa backup di ciò che sostituisce.
 
