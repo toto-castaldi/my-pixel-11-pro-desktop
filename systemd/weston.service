@@ -23,5 +23,8 @@ Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus
 Environment=HYPRLAND_NO_SD_VARS=1
 ExecStart=%h/.local/libexec/my-pixel-11-pro-desktop/start-session
 ExecStopPost=/usr/bin/systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE
+# Remove the alias wayland-0 -> Hyprland socket of the shared clipboard
+# (REQ-DSK-005), so it never points to a closed socket.
+ExecStopPost=-%h/.local/libexec/my-pixel-11-pro-desktop/session-socket unlink
 StandardOutput=journal
 StandardError=journal

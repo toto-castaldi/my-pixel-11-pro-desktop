@@ -159,3 +159,47 @@ setup() {
 	run core_unlink_action file "" /dev/null
 	[ "$output" = "keep" ]
 }
+
+@test "agent_socket: the Terminal app agent uses wayland-0 (US-007)" {
+	run core_agent_socket
+	[ "$output" = "wayland-0" ]
+}
+
+@test "agent_socket_action: a missing wayland-0 is linked to the compositor socket" {
+	run core_agent_socket_action missing "" wayland-1 no
+	[ "$output" = "link" ]
+}
+
+@test "agent_socket_action: the right link is kept, a stale one replaced" {
+	run core_agent_socket_action link wayland-1 wayland-1 no
+	[ "$output" = "skip" ]
+	run core_agent_socket_action link wayland-2 wayland-1 no
+	[ "$output" = "replace" ]
+}
+
+@test "agent_socket_action: an orphan socket is replaced, a live one kept" {
+	run core_agent_socket_action socket "" wayland-1 no
+	[ "$output" = "replace" ]
+	run core_agent_socket_action socket "" wayland-1 yes
+	[ "$output" = "skip" ]
+}
+
+@test "agent_socket_action: other entries and a compositor already on wayland-0 are left alone" {
+	run core_agent_socket_action file "" wayland-1 no
+	[ "$output" = "skip" ]
+	run core_agent_socket_action socket "" wayland-0 yes
+	[ "$output" = "skip" ]
+	run core_agent_socket_action missing "" wayland-0 no
+	[ "$output" = "skip" ]
+	run core_agent_socket_action missing "" "" no
+	[ "$output" = "skip" ]
+}
+
+@test "agent_socket_unlink_action: only the alias link is removed" {
+	run core_agent_socket_unlink_action link
+	[ "$output" = "remove" ]
+	for kind in missing socket file; do
+		run core_agent_socket_unlink_action "$kind"
+		[ "$output" = "skip" ]
+	done
+}
