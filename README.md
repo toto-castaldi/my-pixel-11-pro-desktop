@@ -145,7 +145,7 @@ che equivale a `./install.sh`: anche lo script senza opzioni, ad esempio dopo un
 | `lib/` | funzioni dello script: `core.sh` (pure, testabili) e `effects.sh` (apt e filesystem) |
 | `packages/` | elenchi dei pacchetti Debian, un pacchetto per riga; quelli da `trixie-backports` in file `*.backports.list` |
 | `config/` | dotfile del desktop, uno per applicazione: `hypr/` (Hyprland, `hyprland.lua`), `waybar/` (barra), `foot/` (terminale), `fuzzel/` (launcher), `mako/` (notifiche); `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
-| `systemd/` | unità systemd utente della sessione grafica (`weston.service`) , il suo comando di avvio (`start-session.sh`) e il link del socket della clipboard condivisa (`session-socket.sh`), collegati in `~/.local/libexec/my-pixel-11-pro-desktop/` |
+| `systemd/` | unità systemd utente della sessione grafica (`weston.service`), il suo comando di avvio (`start-session.sh`) e il link del socket della clipboard condivisa (`session-socket.sh`), collegati in `~/.local/libexec/my-pixel-11-pro-desktop/` |
 | `tests/` | test unitari bats |
 | `scripts/` | strumenti di sviluppo (`gate.sh`) |
 
