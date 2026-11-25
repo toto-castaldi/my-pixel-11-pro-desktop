@@ -9,3 +9,7 @@ config/waybar/config.jsonc .config/waybar/config.jsonc
 config/waybar/style.css .config/waybar/style.css
 config/foot/foot.ini .config/foot/foot.ini
 config/fuzzel/fuzzel.ini .config/fuzzel/fuzzel.ini
+config/hypr/hyprpaper.conf .config/hypr/hyprpaper.conf
+config/hypr/hyprlock.conf .config/hypr/hyprlock.conf
+config/hypr/wallpaper.png .config/hypr/wallpaper.png
+config/mako/config .config/mako/config

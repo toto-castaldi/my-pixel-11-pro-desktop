@@ -20,6 +20,7 @@ hl.monitor({
 
 local terminal = "foot"
 local menu     = "fuzzel"
+local locker   = "pidof hyprlock || hyprlock"
 
 -------------------
 ---- AUTOSTART ----
@@ -29,6 +30,8 @@ hl.on("hyprland.start", function()
     -- Make the session visible to D-Bus activated and systemd user services.
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE DISPLAY")
     hl.exec_cmd("waybar")
+    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("mako")
 end)
 
 hl.env("XCURSOR_SIZE", "24")
@@ -108,6 +111,7 @@ hl.bind(mainMod .. " + Q",      hl.dsp.window.close(),     { description = "Chiu
 hl.bind(mainMod .. " + F4",     hl.dsp.window.close(),     { description = "Chiudi la finestra" })
 hl.bind(mainMod .. " + V",      hl.dsp.window.float({ action = "toggle" }), { description = "Finestra flottante" })
 hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen(), { description = "Schermo intero" })
+hl.bind("CTRL + ALT + L",       hl.dsp.exec_cmd(locker),   { description = "Blocca lo schermo" })
 hl.bind("CTRL + ALT + Q",
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"),
     { description = "Esci dalla sessione" })
