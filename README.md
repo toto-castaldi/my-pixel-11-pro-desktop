@@ -6,7 +6,7 @@ L'app Terminal esegue una VM Debian 13 (trixie, aarch64) e ne mostra il display 
 
 ## Stato
 
-In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione avvia Hyprland al posto di Weston sul display; la configurazione del desktop arriva con gli item successivi. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
+In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione avvia Hyprland al posto di Weston sul display, con barra, launcher, terminale, tastiera italiana e scorciatoie; le altre parti del desktop arrivano con gli item successivi. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
 
 ## Prerequisiti
 
@@ -33,6 +33,34 @@ systemctl --user restart weston
 oppure riavviare la VM. Se Hyprland non è installato, la stessa unità avvia Weston, così il display non resta vuoto. Il log della sessione si legge con `journalctl --user -u weston`.
 
 `./install.sh --help` mostra l'uso senza modificare il sistema. Lo script è rieseguibile: una seconda esecuzione stampa `Nessuna modifica` e non crea backup.
+
+## Uso del desktop
+
+All'avvio della sessione compare in alto la barra (waybar) con i workspace, il titolo della finestra attiva, il layout di tastiera e l'ora; un clic sull'ora mostra anche la data. Il layout di tastiera è italiano (`it`); AltGr resta disponibile per `@`, `#`, `[` e `]`.
+
+Tastiera e mouse arrivano a Hyprland solo dalla vista grafica (Display) dell'app Terminal, e solo dopo aver cliccato dentro la sua finestra. Il tasto SUPER (Meta) e il tasto Tab li prende Android: per questo le scorciatoie usano `Alt`.
+
+| Scorciatoia | Azione |
+| --- | --- |
+| `Alt + Invio` | apre il terminale (foot) |
+| `Alt + Spazio` | apre il launcher delle applicazioni (fuzzel) |
+| `Alt + Q` oppure `Alt + F4` | chiude la finestra attiva |
+| `Alt + F` | schermo intero sì/no |
+| `Alt + V` | finestra flottante sì/no |
+| `Alt + frecce` | sposta il focus tra le finestre |
+| `Alt + 1` … `Alt + 0` | va al workspace da 1 a 10 |
+| `Alt + Maiusc + 1` … `Alt + Maiusc + 0` | sposta la finestra attiva nel workspace da 1 a 10 |
+| `Alt + rotella del mouse` | passa al workspace successivo o precedente |
+| `Alt + tasto sinistro` / `Alt + tasto destro`, trascinando | sposta / ridimensiona la finestra |
+| `Ctrl + Alt + Q` | esce dalla sessione Hyprland |
+
+Dopo l'uscita il display resta vuoto finché la sessione non riparte: si riapre il display dall'app Terminal, oppure da una shell della VM:
+
+```bash
+systemctl --user start weston
+```
+
+I dotfile del desktop stanno in `config/` e sono collegati in `~/.config/` con link simbolici: una modifica nel clone vale per Hyprland dopo `hyprctl reload` e per waybar, foot e fuzzel alla loro riapertura.
 
 ## Dopo un aggiornamento dell'app Terminal
 
@@ -74,7 +102,7 @@ che equivale a `./install.sh`: anche lo script senza opzioni, ad esempio dopo un
 | `install.sh` | script di installazione |
 | `lib/` | funzioni dello script: `core.sh` (pure, testabili) e `effects.sh` (apt e filesystem) |
 | `packages/` | elenchi dei pacchetti Debian, un pacchetto per riga; quelli da `trixie-backports` in file `*.backports.list` |
-| `config/` | dotfile del desktop; `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
+| `config/` | dotfile del desktop, uno per applicazione: `hypr/` (Hyprland, `hyprland.lua`), `waybar/` (barra), `foot/` (terminale), `fuzzel/` (launcher); `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
 | `systemd/` | unità systemd utente della sessione grafica (`weston.service`) e il suo comando di avvio (`start-session.sh`, collegato in `~/.local/libexec/my-pixel-11-pro-desktop/`) |
 | `tests/` | test unitari bats |
 | `scripts/` | strumenti di sviluppo (`gate.sh`) |
