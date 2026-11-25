@@ -21,7 +21,7 @@
 
 ### 1. Il suono della VM non arriva al telefono
 
-**No.** Lo stream si interrompe lato Android prima che venga riprodotto qualcosa, quindi non c'è nulla da ascoltare; la conclusione viene dai log e non da una prova di ascolto.
+**No.** Lo stream si interrompe lato Android prima che venga riprodotto qualcosa. Lo confermano i log e una prova di ascolto: con `speaker-test -D hw:0,0 -c 2 -r 48000 -F S16_LE -t sine -f 440 -l 1` (tono a 440 Hz) il comando è fallito subito con `Setting of hwparams failed: Input/output error`, e l'utente, in ascolto, dal telefono non ha sentito niente.
 
 Pacchetti e servizi nella VM: `pulseaudio` 17.0 e `pulseaudio-utils` sono installati e il servizio utente `pulseaudio` è attivo; PipeWire non è installato (ci sono solo le librerie `libpipewire-0.3-0t64` e `libwireplumber-0.5-0`, che servono a waybar).
 
@@ -83,7 +83,7 @@ Comandi, verificati con `pactl` 17.0 su un'istanza PulseAudio temporanea con un 
 ## Limits, costs and risks
 
 - Osservato il 2026-11-25 su Android 17 `CD1A.261005.003` con l'app Terminal versionCode 37. La causa è nella policy SELinux della build e potrebbe sparire con un aggiornamento: va ricontrollata dopo ogni aggiornamento (la prova è il comando `aplay` di cui sopra).
-- Non è stata fatta una prova di ascolto: dato che lo stream non si apre mai, non sarebbe servita. Non sono state provate l'uscita sul dock (HDMI/USB) né le cuffie Bluetooth, ma l'errore avviene prima della scelta del dispositivo di uscita.
+- La prova di ascolto è stata fatta solo con l'audio del telefono, sul dock. Non sono state provate l'uscita sul dock (HDMI/USB) né le cuffie Bluetooth, ma l'errore avviene prima della scelta del dispositivo di uscita.
 - Il ciclo di tentativi di PulseAudio occupa la VM e riempie il logcat del telefono. Un client PulseAudio che si collega al server dell'utente (per esempio waybar o `pactl` in una scorciatoia) può restare bloccato per decine di secondi.
 - REQ-DSK-003 e `acceptance.md` chiedono di alzare, abbassare e silenziare il volume e di vederne il livello nella barra. Con un sink nullo è realizzabile, ma il volume non avrebbe effetto udibile. Va deciso con l'utente se il requisito resta così, viene rinviato o viene ridotto.
 
