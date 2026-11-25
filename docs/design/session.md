@@ -6,6 +6,12 @@ Il progetto non modifica quei file: `install.sh` collega `systemd/weston.service
 
 `ExecStart` esegue `~/.local/libexec/my-pixel-11-pro-desktop/start-session`, link a `systemd/start-session.sh`. Lo script avvia `/usr/bin/start-hyprland` se esiste; altrimenti avvia Weston con lo stesso comando dell'unità di sistema (`/usr/bin/weston --modules=systemd-notify.so --xwayland --continue-without-input`), così il display non resta vuoto. La scelta è la funzione pura `core_session_command` di `lib/core.sh`; lo script scrive nel journal quale compositor avvia. La variabile `MPD_START_HYPRLAND` cambia il percorso controllato e serve solo a simulare l'assenza di Hyprland. Hyprland legge le stesse variabili di `~/weston.env` (zink su Vulkan gfxstream) ed espone il monitor `CrosvmDisplay`.
 
+## Ritorno a Weston
+
+`./install.sh --session weston` toglie `~/.config/systemd/user/weston.service` solo se è il link verso `systemd/weston.service` del clone, e `~/.config/systemd/user/weston.socket` solo se è il link a `/dev/null`; qualunque altro file in quei percorsi è dell'utente e resta, con un avviso. La decisione è la funzione pura `core_unlink_action` di `lib/core.sh`. Poi esegue `systemctl --user daemon-reload`: tornano in vigore l'unità `weston.service` e `weston.socket` di `/etc/systemd/user/`. Non tocca pacchetti, il link di `start-session` né gli altri dotfile. `./install.sh --session hyprland` è un alias di `./install.sh`, che rimette il link e la maschera. Il cambio ha effetto al successivo `systemctl --user start weston` dell'app, cioè alla riapertura del display o al riavvio della VM, oppure subito con `systemctl --user restart weston`.
+
+## Annidamento
+
 Hyprland non può girare annidato dentro Weston 14: richiede `wl_compositor` versione 6, Weston offre la 5.
 
 ## Input

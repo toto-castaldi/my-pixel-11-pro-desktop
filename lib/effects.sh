@@ -102,6 +102,36 @@ effects_mask_unit() {
 	EFFECTS_UNITS_CHANGED=1
 }
 
+# Remove the link <home>/<rel> if it points to <expected>; any other entry
+# is left in place with a warning, so a user file is never lost.
+effects_unlink() {
+	local home="$1" rel="$2" expected="$3"
+	local dst kind current
+	dst="$(core_link_target "$home" "$rel")"
+	current=""
+	if [ -L "$dst" ]; then
+		kind="link"
+		current="$(readlink "$dst")"
+	elif [ -e "$dst" ]; then
+		kind="file"
+	else
+		kind="missing"
+	fi
+	case "$(core_unlink_action "$kind" "$current" "$expected")" in
+		skip) return 0 ;;
+		keep)
+			effects_log "Lascio $dst: non è stato creato da questo progetto"
+			return 0
+			;;
+	esac
+	effects_log "Rimuovo $dst"
+	rm "$dst"
+	EFFECTS_CHANGES=$((EFFECTS_CHANGES + 1))
+	case "$dst" in
+		*/.config/systemd/user/*) EFFECTS_UNITS_CHANGED=1 ;;
+	esac
+}
+
 # Reload the user systemd manager when units changed in this run.
 effects_reload_units() {
 	[ "$EFFECTS_UNITS_CHANGED" -eq 1 ] || return 0

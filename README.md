@@ -46,13 +46,26 @@ systemctl --user restart weston
 
 ## Tornare a Weston
 
-Per tornare alla sessione Weston dell'app Terminal basta togliere l'override (Weston non viene mai disinstallato):
+Per tornare alla sessione Weston dell'app Terminal, ad esempio se Hyprland non parte bene:
 
 ```bash
-rm ~/.config/systemd/user/weston.service ~/.config/systemd/user/weston.socket
-systemctl --user daemon-reload
+cd ~/my-pixel-11-pro-desktop
+./install.sh --session weston
+```
+
+Il comando toglie l'unità `~/.config/systemd/user/weston.service` del progetto e la maschera di `weston.socket`, così torna in uso l'unità di sistema dell'app Terminal. Non installa né rimuove pacchetti e lascia al loro posto gli altri dotfile; Weston non viene mai disinstallato. Un file in quei percorsi che non è stato creato dal progetto resta dov'è, con un avviso. Il cambio ha effetto alla successiva apertura del display; per passare subito:
+
+```bash
 systemctl --user restart weston
 ```
+
+Per tornare a Hyprland:
+
+```bash
+./install.sh --session hyprland
+```
+
+che equivale a `./install.sh`: anche lo script senza opzioni, ad esempio dopo un aggiornamento dell'app, riporta la sessione Hyprland. Entrambi i comandi sono rieseguibili: la seconda volta stampano `Nessuna modifica`.
 
 ## Struttura del repository
 
