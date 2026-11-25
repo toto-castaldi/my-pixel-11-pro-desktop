@@ -6,7 +6,8 @@
   "module": "MOD-003",
   "type": "User Story",
   "priority": "P2",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "us/US-004-sfondo-blocco-schermo-notifiche",
   "dependencies": [
     "US-003"
   ],
