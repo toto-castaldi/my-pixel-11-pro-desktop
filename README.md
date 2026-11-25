@@ -44,7 +44,7 @@ I file sostituiti da un link vengono salvati accanto all'originale come `<file>.
 
 ## Sviluppo
 
-Requisiti in `docs/requirements/`, design in `docs/design/`.
+Requisiti in `docs/requirements/`, design in `docs/design/`. Il setup per lavorare sulla VM con il telefono collegato a monitor, tastiera e mouse (adb via Wi-Fi e `ssh pixel`) è descritto in `docs/design/dev-environment.md`.
 
 Preparazione, sulla VM:
 
