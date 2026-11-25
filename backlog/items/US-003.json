@@ -6,7 +6,8 @@
   "module": "MOD-003",
   "type": "User Story",
   "priority": "P1",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "us/US-003-desktop-base",
   "dependencies": [
     "US-001",
     "SPIKE-001"
