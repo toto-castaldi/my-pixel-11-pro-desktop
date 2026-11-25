@@ -13,7 +13,7 @@ host di sviluppo ──ssh──▶ host adb ──adb (USB o Wi-Fi)──▶ Pi
 - **Host di sviluppo:** la macchina dove girano l'agente e il clone del repository.
 - **Host adb:** una macchina con `adb` che raggiunge il telefono in uno dei due modi: collegata via USB, oppure sulla stessa rete Wi-Fi del telefono. Può coincidere con l'host di sviluppo; altrimenti l'host di sviluppo la raggiunge via ssh.
 - **Pixel 11 Pro:** quando la porta USB-C è occupata dal dock con monitor esterno, tastiera e mouse, Android è in modalità desktop, la finestra del Terminal (vista grafica) sta sul monitor e adb passa via Wi-Fi.
-- **VM:** sshd in ascolto sulla porta `2222` (`/etc/ssh/sshd_config.d/`), configurato a mano una volta sola. Dal telefono la VM si raggiunge al suo IP sull'interfaccia `avf_tap_fixed`; né il port forwarding dell'app Terminal né `adb forward` funzionano per questo.
+- **VM:** sshd in ascolto sulla porta `2222` (`Port 2222` in `/etc/ssh/sshd_config` o in un file di `/etc/ssh/sshd_config.d/`), configurato a mano dopo ogni creazione o reimpostazione della VM. Dal telefono la VM si raggiunge al suo IP sull'interfaccia `avf_tap_fixed`; né il port forwarding dell'app Terminal né `adb forward` funzionano per questo.
 
 ## Passare adb a Wi-Fi
 
@@ -55,6 +55,22 @@ Host pixel
 - Nomi, indirizzi e chiavi restano in `~/.ssh/` delle macchine; nel repository solo segnaposto.
 
 Uso: `ssh pixel` per una shell nella VM, `ssh pixel '<comando>'` per un comando singolo.
+
+## Dopo una reimpostazione della VM
+
+La reimpostazione dall'app Terminal cancella tutta la VM: clone del repository, `~/.ssh/` (chiave per GitHub e `authorized_keys`), configurazione di sshd e pacchetti installati. Per riavere `ssh pixel`, dalla vista testuale dell'app:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y openssh-server   # di solito già presente nell'immagine
+echo 'Port 2222' | sudo tee /etc/ssh/sshd_config.d/port.conf
+sudo systemctl restart ssh
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+# aggiungere a ~/.ssh/authorized_keys la chiave pubblica dell'host di sviluppo
+chmod 600 ~/.ssh/authorized_keys
+```
+
+Poi, sull'host di sviluppo: la VM ha una nuova chiave host, quindi si toglie quella vecchia con `ssh-keygen -R pixel-vm` e, se è cambiato, si aggiorna `<IP_VM>` (vedi la tabella seguente).
 
 ## Recupero
 

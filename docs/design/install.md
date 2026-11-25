@@ -12,4 +12,4 @@ Le funzioni dello script stanno in `lib/` e sono separate in pure (calcolo di pe
 
 Verifica unica di lint, configurazione Hyprland e test: `scripts/gate.sh`.
 
-Dettagli dell'installazione completa definiti da US-006.
+Installazione completa su una VM reimpostata (README): `sudo apt-get update` e `git` (assente nell'immagine), password per `droid` (serve a hyprlock), clone via HTTPS del repository pubblico nella home, `./install.sh`, riavvio della sessione con `systemctl --user restart weston`. Non serve nessuna chiave: le apt list vengono aggiornate dal primo passo, `install.sh` non esegue `apt-get update`.
