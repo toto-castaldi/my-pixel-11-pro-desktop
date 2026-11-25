@@ -23,4 +23,4 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 
 Decisions still to be closed and the backlog items that will close them:
 
-- Fattibilità della clipboard condivisa con Android — SPIKE-004
+Nessuna.
