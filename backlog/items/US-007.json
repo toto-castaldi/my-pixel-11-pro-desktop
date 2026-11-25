@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "User Story",
   "priority": "P1",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "us/US-007-clipboard-condivisa-hyprland-android",
   "dependencies": [
     "SPIKE-004",
     "US-002"
