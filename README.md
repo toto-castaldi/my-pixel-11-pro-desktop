@@ -58,8 +58,13 @@ Tastiera e mouse arrivano a Hyprland solo dalla vista grafica (Display) dell'app
 | `Alt + Maiusc + 1` … `Alt + Maiusc + 0` | sposta la finestra attiva nel workspace da 1 a 10 |
 | `Alt + rotella del mouse` | passa al workspace successivo o precedente |
 | `Alt + tasto sinistro` / `Alt + tasto destro`, trascinando | sposta / ridimensiona la finestra |
+| `Alt + P` | screenshot dello schermo intero |
+| `Alt + Maiusc + P` | screenshot di un'area: si seleziona trascinando il mouse, `Esc` annulla |
+| `Ctrl + Alt + V` | cronologia della clipboard: la voce scelta torna nella clipboard e si incolla come al solito (`Ctrl + V`, nel terminale `Ctrl + Maiusc + V`) |
 | `Ctrl + Alt + L` | blocca lo schermo (hyprlock); si sblocca digitando la password dell'utente e Invio |
 | `Ctrl + Alt + Q` | esce dalla sessione Hyprland |
+
+Gli screenshot sono salvati in PNG nella cartella `~/Pictures/Screenshots/`, con il nome `AAAAMMGG-HHMMSS.png`; una notifica indica il file. La cronologia della clipboard (cliphist) conserva i testi copiati durante la sessione Hyprland, anche tra un riavvio e l'altro; si svuota con `cliphist wipe`.
 
 Dopo l'uscita il display resta vuoto finché la sessione non riparte: si riapre il display dall'app Terminal, oppure da una shell della VM:
 

@@ -100,3 +100,26 @@ setup() {
 	grep -q 'blur_passes = 0' "$REPO/config/hypr/hyprlock.conf"
 	grep -q '^input-field {' "$REPO/config/hypr/hyprlock.conf"
 }
+
+@test "packages: screenshot and clipboard tools are installed (US-005)" {
+	run core_list_entries <"$REPO/packages/base.list"
+	for p in grim slurp wl-clipboard cliphist; do
+		[[ "$output" == *$'\n'"$p"* ]] || { echo "missing: $p"; return 1; }
+	done
+}
+
+@test "hyprland.lua: screenshots go to ~/Pictures/Screenshots, ALT + P and ALT + SHIFT + P capture (US-005)" {
+	grep -q 'f="$HOME/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png"' "$HYPR"
+	grep -q "local shotFull = shotFile .. ' && grim \"\$f\"'" "$HYPR"
+	grep -q "g=\"\$(slurp)\" && grim -g \"\$g\" \"\$f\"" "$HYPR"
+	grep -q 'mainMod .. " + P",         hl.dsp.exec_cmd(shotFull)' "$HYPR"
+	grep -q 'mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(shotArea)' "$HYPR"
+}
+
+@test "hyprland.lua: cliphist records the clipboard, CTRL + ALT + V opens the history (US-005)" {
+	grep -q 'hl.exec_cmd(clipStore)' "$HYPR"
+	grep -q 'local clipStore   = "wl-paste --type text --watch cliphist store"' "$HYPR"
+	grep -q 'cliphist list | fuzzel --dmenu' "$HYPR"
+	grep -q 'cliphist decode | wl-copy' "$HYPR"
+	grep -q 'hl.bind("CTRL + ALT + V",       hl.dsp.exec_cmd(clipHistory)' "$HYPR"
+}
