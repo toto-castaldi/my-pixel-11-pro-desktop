@@ -15,7 +15,7 @@ The *what* of the project, one file per requirement (`docs/process/docs.md` §1)
 
 ## Goal
 
-Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile). La v0.1.0 è riuscita quando, su una VM appena reimpostata, un clone del repository e `install.sh` bastano per avere sul display del Terminal un desktop Hyprland accelerato dalla GPU, con barra, launcher, terminale, sfondo, blocco schermo, notifiche, screenshot, cronologia della clipboard e volume.
+Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un desktop Linux completo basato su Hyprland, riproducibile da zero con questo repository (script di installazione e dotfile). La v0.1.0 è riuscita quando, su una VM appena reimpostata, un clone del repository e `install.sh` bastano per avere sul display del Terminal un desktop Hyprland accelerato dalla GPU, con barra, launcher, terminale, sfondo, blocco schermo, notifiche, screenshot, e cronologia della clipboard.
 
 ## Actors
 
@@ -28,7 +28,7 @@ Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un des
 - Hyprland come compositor del display del Terminal al posto di Weston, con accelerazione GPU, e ritorno a Weston con un comando.
 - Desktop base: waybar, fuzzel, foot, tastiera italiana, scorciatoie compatibili con l'input di Android.
 - Sfondo (hyprpaper), blocco schermo (hyprlock), notifiche (mako).
-- Screenshot (grim, slurp), cronologia della clipboard, controllo del volume.
+- Screenshot (grim, slurp), cronologia della clipboard.
 - `install.sh` rieseguibile che installa i pacchetti, collega i dotfile con link simbolici e fa backup di ciò che sostituisce.
 
 ### Out of scope for v0.1.0
@@ -36,6 +36,7 @@ Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un des
 Do not introduce these without first updating the requirements and the backlog:
 
 - Condivisione della clipboard tra la VM e Android (solo indagata da una spike).
+- Controllo del volume (REQ-DSK-004): rinviato perché Android blocca l'audio della VM (SPIKE-003).
 - Tema grafico coordinato tra le applicazioni.
 - Applicazioni desktop aggiuntive (browser, file manager, editor) e ambienti di sviluppo.
 - Profili di schermo diversi per telefono e monitor esterno.

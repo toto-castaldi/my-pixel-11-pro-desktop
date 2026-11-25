@@ -2,7 +2,7 @@
 
 - **Date:** 2026-11-25
 - **Outcome:** Partial — l'audio della VM non arriva al telefono, perché Android rifiuta gli stream di crosvm; i comandi del volume (`pactl`) e il modulo waybar sono individuati e i comandi verificati su un sink nullo; si raccomanda di restare su PulseAudio.
-- **Requirements:** REQ-DSK-003
+- **Requirements:** REQ-DSK-003, REQ-DSK-004
 
 ## Questions
 
@@ -85,12 +85,12 @@ Comandi, verificati con `pactl` 17.0 su un'istanza PulseAudio temporanea con un 
 - Osservato il 2026-11-25 su Android 17 `CD1A.261005.003` con l'app Terminal versionCode 37. La causa è nella policy SELinux della build e potrebbe sparire con un aggiornamento: va ricontrollata dopo ogni aggiornamento (la prova è il comando `aplay` di cui sopra).
 - La prova di ascolto è stata fatta solo con l'audio del telefono, sul dock. Non sono state provate l'uscita sul dock (HDMI/USB) né le cuffie Bluetooth, ma l'errore avviene prima della scelta del dispositivo di uscita.
 - Il ciclo di tentativi di PulseAudio occupa la VM e riempie il logcat del telefono. Un client PulseAudio che si collega al server dell'utente (per esempio waybar o `pactl` in una scorciatoia) può restare bloccato per decine di secondi.
-- REQ-DSK-003 e `acceptance.md` chiedono di alzare, abbassare e silenziare il volume e di vederne il livello nella barra. Con un sink nullo è realizzabile, ma il volume non avrebbe effetto udibile. Va deciso con l'utente se il requisito resta così, viene rinviato o viene ridotto.
+- Con un sink nullo i comandi e la barra del volume sarebbero realizzabili, ma senza effetto udibile: per questo il volume è stato rinviato (REQ-DSK-004).
 
 ## Recommendations
 
 - `design/desktop`: server audio PulseAudio, comandi `pactl set-sink-volume @DEFAULT_SINK@ ±5%` e `pactl set-sink-mute @DEFAULT_SINK@ toggle`, modulo waybar `pulseaudio`, scorciatoie `XF86Audio*` più un'alternativa con `ALT`.
-- Proposta da concordare con l'utente: per la v0.1.0, rinviare a una versione successiva la parte di REQ-DSK-003 sul volume, oppure ridurla a «comandi e barra presenti, effetto udibile non garantito finché Android blocca l'audio della VM». Poi aggiornare requisito, `acceptance.md` e backlog.
+- Deciso con l'utente il 2026-11-25: il controllo del volume esce dalla v0.1.0 e diventa REQ-DSK-004, rinviato a una versione successiva. REQ-DSK-003, `acceptance.md`, US-005 e lo scope della v0.1.0 sono stati aggiornati.
 - Possibile item tecnico (non aggiunto): evitare il ciclo di `module-udev-detect`, per esempio con un `~/.config/pulse/default.pa` che include quello di sistema e carica `module-null-sink` al posto del rilevamento ALSA, così il server risponde subito. Va valutato insieme alla decisione precedente.
 - Dopo ogni aggiornamento di Android o dell'app Terminal, ripetere la prova `aplay -D hw:0,0 …` e controllare in `logcat` le negazioni `crosvm_vu_snd`.
 

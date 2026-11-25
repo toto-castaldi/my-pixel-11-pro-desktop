@@ -1,5 +1,8 @@
 {
   "id": "v0.1.0",
   "goal": "Desktop Hyprland accelerato dalla GPU sul display dell'app Terminal, con barra, launcher, terminale, sfondo, blocco schermo, notifiche, screenshot, clipboard e volume, riproducibile da una VM pulita con install.sh.",
-  "state": "Open"
+  "state": "Open",
+  "scope_changes": [
+    "2026-11-25: Il controllo del volume (REQ-DSK-004) esce dalla v0.1.0: Android blocca l'audio della VM (SPIKE-003). US-005 copre solo screenshot e clipboard. Concordato con l'utente."
+  ]
 }

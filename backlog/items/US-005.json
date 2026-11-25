@@ -1,6 +1,6 @@
 {
   "id": "US-005",
-  "title": "Screenshot, cronologia clipboard e controllo del volume",
+  "title": "Screenshot e cronologia clipboard",
   "version": "v0.1.0",
   "epic": "EPIC-003",
   "module": "MOD-003",
@@ -8,8 +8,7 @@
   "priority": "P2",
   "status": "Todo",
   "dependencies": [
-    "US-003",
-    "SPIKE-003"
+    "US-003"
   ],
   "requirements": [
     "REQ-DSK-003"
@@ -17,10 +16,9 @@
   "design_references": [
     "design/desktop"
   ],
-  "description": "Come utente, voglio fare screenshot, recuperare testi copiati e gestire il volume senza uscire dal desktop.",
+  "description": "Come utente, voglio fare screenshot e recuperare testi copiati senza uscire dal desktop.",
   "acceptance_criteria": [
     "Le scorciatoie documentate catturano schermo intero e area selezionata (grim + slurp) e salvano un PNG nella cartella indicata nel README.",
-    "Dopo aver copiato due testi diversi, la scorciatoia della cronologia (cliphist + fuzzel) permette di incollare il primo.",
-    "Le scorciatoie del volume cambiano il livello con lo strumento raccomandato da SPIKE-003 e waybar mostra il valore aggiornato."
+    "Dopo aver copiato due testi diversi, la scorciatoia della cronologia (cliphist + fuzzel) permette di incollare il primo."
   ]
 }
