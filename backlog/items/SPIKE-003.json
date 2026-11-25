@@ -6,7 +6,7 @@
   "module": "MOD-003",
   "type": "Spike",
   "priority": "P1",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "spike/SPIKE-003-audio-nella-vm",
   "dependencies": [],
   "design_references": [
@@ -17,5 +17,7 @@
     "Il report docs/spikes/SPIKE-003-audio.md indica se un suono riprodotto nella VM si sente dal telefono, con il test usato.",
     "Il report indica il comando per alzare, abbassare e silenziare il volume (es. pactl o wpctl) e il modulo waybar adatto.",
     "Il report dice se conviene restare su PulseAudio o passare a PipeWire, con i motivi."
-  ]
+  ],
+  "outcome": "Report docs/spikes/SPIKE-003-audio.md. Audio: non arriva al telefono. Su Android 17 CD1A.261005.003 crosvm non apre gli stream AAudio, perché SELinux nega a crosvm_vu_snd il memfd di audioserver (createTrack_l: Could not get control block). Nella VM aplay -D hw:0,0 fallisce con set_params e nel kernel c'è il timeout di PCM_PREPARE; nessuna prova di ascolto, inutile perché lo stream non si apre. PulseAudio riprova la scheda circa ogni 50 s e non risponde ai client. Volume: pactl set-sink-volume @DEFAULT_SINK@ +5%/-5% e set-sink-mute toggle, verificati su un sink nullo temporaneo; modulo waybar pulseaudio (waybar 0.12 ha libpulse); la tastiera virtio dichiara KEY_VOLUMEUP/DOWN/MUTE, ma non si è verificato se Android li inoltra. Raccomandazione: restare su PulseAudio, perché PipeWire non aggira il blocco di Android. Design aggiornato (desktop, README). Da decidere con l'utente: il volume di REQ-DSK-003 nella v0.1.0. Gate superato sulla VM; installato alsa-utils sulla VM; nessun file di configurazione modificato.",
+  "closed_at": "2026-11-25"
 }
