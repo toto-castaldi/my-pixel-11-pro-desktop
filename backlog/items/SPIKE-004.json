@@ -6,7 +6,8 @@
   "module": "MOD-003",
   "type": "Spike",
   "priority": "P2",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "spike/SPIKE-004-clipboard-android",
   "dependencies": [],
   "design_references": [
     "design/desktop"
