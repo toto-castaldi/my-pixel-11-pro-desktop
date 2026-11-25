@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "User Story",
   "priority": "P0",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "us/US-001-hyprland-al-posto-di-weston",
   "dependencies": [
     "TEC-002",
     "SPIKE-002"
