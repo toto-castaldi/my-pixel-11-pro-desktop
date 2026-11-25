@@ -6,7 +6,7 @@
   "module": "MOD-003",
   "type": "User Story",
   "priority": "P2",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "us/US-004-sfondo-blocco-schermo-notifiche",
   "dependencies": [
     "US-003"
@@ -25,5 +25,8 @@
   ],
   "remarks": [
     "hyprpaper 0.8.4 (trixie-backports) non funziona sulla GPU virtualizzata: hyprtoolkit alloca buffer AB4H (vkFormat 0x61) non supportati da gfxstream e va in asserzione; con rendering software si blocca. Con l'accordo dell'utente lo sfondo usa swaybg (trixie main, wl_shm): aggiornati REQ-DSK-002, scope, design/desktop, AGENTS.md §4 e il primo criterio."
-  ]
+  ],
+  "outcome": "Sfondo versionato (config/hypr/wallpaper.png, gradiente generato, CC0) mostrato da swaybg all'avvio della sessione; blocco schermo hyprlock con CTRL+ALT+L; notifiche mako avviate con la sessione e via D-Bus. hyprpaper 0.8.4 scartato: buffer AB4H non supportati da gfxstream (asserzione), in software si blocca. Verifiche sulla VM: install.sh due volte (la seconda senza modifiche), gate completo superato (shellcheck, Hyprland --verify-config, bats 38 test), file di REQ-NFR-002 invariati (mtime del 2026-11-24). Osservato dall'utente sul monitor: notifica di notify-send visibile in alto a destra; CTRL+ALT+L blocca e la sua password sblocca; dopo systemctl --user restart weston compaiono sfondo e barra. Hyprland ricarica da solo hyprland.lua al cambio dei file, ma il ricaricamento non riesegue l'avvio di swaybg e mako.",
+  "changelog": "Added: sfondo con swaybg, blocco schermo con hyprlock (Ctrl+Alt+L) e notifiche desktop con mako",
+  "closed_at": "2026-11-25"
 }
