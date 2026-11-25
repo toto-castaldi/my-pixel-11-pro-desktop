@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "Spike",
   "priority": "P0",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "spike/SPIKE-002-tenuta-riavvio-aggiornamenti",
   "dependencies": [],
   "requirements": [
     "REQ-NFR-002"
