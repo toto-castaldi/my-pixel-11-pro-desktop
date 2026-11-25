@@ -1,0 +1,31 @@
+{
+  "id": "US-007",
+  "title": "Clipboard condivisa tra Hyprland e Android",
+  "version": "v0.2.0",
+  "epic": "EPIC-003",
+  "module": "MOD-002",
+  "type": "User Story",
+  "priority": "P1",
+  "status": "Todo",
+  "dependencies": [
+    "SPIKE-004",
+    "US-002"
+  ],
+  "requirements": [
+    "REQ-DSK-005"
+  ],
+  "design_references": [
+    "design/session",
+    "design/desktop"
+  ],
+  "description": "Come utente, voglio copiare e incollare testo tra le app Android e le applicazioni della sessione Hyprland nei due versi, usando il canale della clipboard dell'app Terminal (SPIKE-004).",
+  "acceptance_criteria": [
+    "All'avvio della sessione Hyprland il socket wayland-0 usato dall'agente linux_vm_manager porta a Hyprland; la scelta tra link creato da start-session e Hyprland avviato con --socket wayland-0 è registrata nel design (design/session) e chiude la decisione aperta.",
+    "Android -> VM: un testo copiato in un'app Android si incolla in foot, osservato dall'utente sul display.",
+    "VM -> Android: un testo copiato in foot si incolla in un'app Android dopo l'uscita dalla finestra del Terminal, osservato dall'utente.",
+    "Durante le prove il journal di linux_vm_manager non mostra errori di wl-copy o wl-paste.",
+    "Dopo un riavvio della VM la condivisione funziona ancora senza interventi manuali.",
+    "Il ritorno a Weston (./install.sh --session weston) funziona ancora e non lascia alias di wayland-0 verso un socket inesistente.",
+    "Test bats per le nuove funzioni pure; il README documenta la clipboard condivisa e il limite del cambio di focus."
+  ]
+}

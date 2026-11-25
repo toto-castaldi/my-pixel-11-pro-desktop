@@ -23,4 +23,4 @@ Add a topic by copying `_TEMPLATE.md` to `<topic>.md` (lowercase kebab-case); sp
 
 Decisions still to be closed and the backlog items that will close them:
 
-Nessuna.
+- Come rendere `wayland-0` il socket di Hyprland per la clipboard condivisa (REQ-DSK-005): link `wayland-0 → wayland-1` creato da `start-session`, oppure Hyprland avviato con `--socket wayland-0` (SPIKE-004). La chiude US-007.

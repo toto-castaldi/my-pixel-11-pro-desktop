@@ -35,7 +35,7 @@ Trasformare la VM Debian dell'app Terminal di Android sul Pixel 11 Pro in un des
 
 Do not introduce these without first updating the requirements and the backlog:
 
-- Condivisione della clipboard tra la VM e Android (solo indagata da una spike).
+- Condivisione della clipboard tra la VM e Android (REQ-DSK-005, pianificata per la v0.2.0).
 - Controllo del volume (REQ-DSK-004).
 - Tema grafico coordinato tra le applicazioni.
 - Applicazioni desktop aggiuntive (browser, file manager, editor) e ambienti di sviluppo.
