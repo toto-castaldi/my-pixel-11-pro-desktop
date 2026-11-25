@@ -6,7 +6,8 @@
   "module": "MOD-003",
   "type": "User Story",
   "priority": "P2",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "us/US-005-screenshot-e-cronologia-clipboard",
   "dependencies": [
     "US-003"
   ],
