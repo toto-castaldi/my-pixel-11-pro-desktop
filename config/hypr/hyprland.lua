@@ -25,6 +25,17 @@ local locker   = "pidof hyprlock || hyprlock"
 -- (AB4H) that gfxstream does not support (design/desktop).
 local wallpaper = "swaybg -m fill -i ~/.config/hypr/wallpaper.png"
 
+-- Screenshots are saved as PNG in $HOME/Pictures/Screenshots (README).
+-- The area capture saves nothing if the slurp selection is cancelled.
+local shotFile = 'mkdir -p "$HOME/Pictures/Screenshots" && f="$HOME/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png"'
+local shotDone = ' && notify-send "Screenshot" "Salvato in $f"'
+local shotFull = shotFile .. ' && grim "$f"' .. shotDone
+local shotArea = shotFile .. ' && g="$(slurp)" && grim -g "$g" "$f"' .. shotDone
+-- Clipboard history: cliphist stores every text copied, fuzzel picks one
+-- entry and wl-copy puts it back in the clipboard.
+local clipStore   = "wl-paste --type text --watch cliphist store"
+local clipHistory = "cliphist list | fuzzel --dmenu --prompt 'Clipboard: ' | cliphist decode | wl-copy"
+
 -------------------
 ---- AUTOSTART ----
 -------------------
@@ -35,6 +46,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd(wallpaper)
     hl.exec_cmd("mako")
+    hl.exec_cmd(clipStore)
 end)
 
 hl.env("XCURSOR_SIZE", "24")
@@ -114,6 +126,9 @@ hl.bind(mainMod .. " + Q",      hl.dsp.window.close(),     { description = "Chiu
 hl.bind(mainMod .. " + F4",     hl.dsp.window.close(),     { description = "Chiudi la finestra" })
 hl.bind(mainMod .. " + V",      hl.dsp.window.float({ action = "toggle" }), { description = "Finestra flottante" })
 hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen(), { description = "Schermo intero" })
+hl.bind(mainMod .. " + P",         hl.dsp.exec_cmd(shotFull), { description = "Screenshot dello schermo" })
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(shotArea), { description = "Screenshot di un'area" })
+hl.bind("CTRL + ALT + V",       hl.dsp.exec_cmd(clipHistory), { description = "Cronologia della clipboard" })
 hl.bind("CTRL + ALT + L",       hl.dsp.exec_cmd(locker),   { description = "Blocca lo schermo" })
 hl.bind("CTRL + ALT + Q",
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"),

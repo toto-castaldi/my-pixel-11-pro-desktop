@@ -6,7 +6,8 @@
   "module": "MOD-003",
   "type": "User Story",
   "priority": "P2",
-  "status": "Todo",
+  "status": "Done",
+  "branch": "us/US-005-screenshot-e-cronologia-clipboard",
   "dependencies": [
     "US-003"
   ],
@@ -20,5 +21,8 @@
   "acceptance_criteria": [
     "Le scorciatoie documentate catturano schermo intero e area selezionata (grim + slurp) e salvano un PNG nella cartella indicata nel README.",
     "Dopo aver copiato due testi diversi, la scorciatoia della cronologia (cliphist + fuzzel) permette di incollare il primo."
-  ]
+  ],
+  "outcome": "Pacchetti grim, slurp, wl-clipboard, cliphist; in hyprland.lua Alt+P (schermo intero) e Alt+Maiusc+P (area con slurp, Esc annulla) salvano PNG in ~/Pictures/Screenshots/AAAAMMGG-HHMMSS.png con notifica; wl-paste --watch cliphist store avviato con la sessione; Ctrl+Alt+V apre la cronologia in fuzzel --dmenu e rimette la voce in clipboard. Verificato dall'utente sul monitor: notifiche dei due screenshot, Esc senza notifica, dopo aver copiato 'primo' e 'secondo' la cronologia incolla 'primo'. Via ssh: PNG validi 1907x892 e 443x265. Gate (./scripts/gate.sh) superato sulla VM, install.sh seconda esecuzione senza modifiche, file REQ-NFR-002 invariati (sha256sum -c). Non osservato: l'avvio automatico del watcher a un nuovo avvio di sessione (nella sessione corrente è stato avviato con hyprctl dispatch per non riavviare).",
+  "changelog": "Added: screenshot dello schermo o di un'area (Alt+P, Alt+Maiusc+P) e cronologia della clipboard (Ctrl+Alt+V)",
+  "closed_at": "2026-11-25"
 }

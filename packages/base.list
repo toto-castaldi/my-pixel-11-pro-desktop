@@ -10,3 +10,7 @@ dbus-bin
 mako-notifier
 libnotify-bin
 swaybg
+grim
+slurp
+wl-clipboard
+cliphist
