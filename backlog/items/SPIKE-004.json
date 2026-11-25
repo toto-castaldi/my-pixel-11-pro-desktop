@@ -6,7 +6,7 @@
   "module": "MOD-003",
   "type": "Spike",
   "priority": "P2",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "spike/SPIKE-004-clipboard-android",
   "dependencies": [],
   "design_references": [
@@ -17,5 +17,7 @@
     "Il report docs/spikes/SPIKE-004-clipboard-android.md dice se l'app Terminal offre un canale per la clipboard (ttyd, vsock, agente della VM) e con quali prove.",
     "Il report elenca le alternative praticabili (es. cartella condivisa, OSC 52) con pro e contro.",
     "Se esiste una soluzione praticabile, il report propone l'idea da registrare nel backlog per una versione futura."
-  ]
+  ],
+  "outcome": "Report docs/spikes/SPIKE-004-clipboard-android.md (Positive): l'app Terminal ha un canale per la clipboard, l'agente linux_vm_manager (readClipboard/updateClipboard con wl-paste/wl-copy su wayland-0 fisso, ai cambi di focus); prove da binario, APK (ClipboardController) e journal. Hyprland è su wayland-1, quindi oggi non funziona; con un link temporaneo wayland-0 -> wayland-1 l'utente ha verificato sul telefono Android->VM e VM->Android (quest'ultimo richiede un cambio di focus); link poi rimosso. Alternative con pro e contro: cartella condivisa /mnt/shared (verificata via adb), OSC 52 (supportato da foot, non dal ttyd della vista testuale), sync via rete (non provata). Proposta nel report: nuovo requisito e User Story futura nel modulo SESSION. Aggiornati design/desktop, design/session, design/README e l'indice degli spike. Gate superato sulla VM (solo documentazione cambiata, install.sh non rieseguito perché il codice non cambia); nessun file di REQ-NFR-002 toccato.",
+  "closed_at": "2026-11-25"
 }
