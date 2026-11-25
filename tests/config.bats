@@ -139,3 +139,9 @@ setup() {
 	grep -q 'session-socket.sh" unlink' "$REPO/systemd/start-session.sh"
 	grep -q 'effects_forget_agent_socket' "$REPO/install.sh"
 }
+
+@test "weston.service: the stale weston.socket is stopped, so the stock Weston gets wayland-0 back (US-007)" {
+	grep -qx 'ExecStartPre=-/usr/bin/systemctl --user --no-block stop weston.socket' "$REPO/systemd/weston.service"
+	run grep -E '^(Requires|BindsTo|Wants)=.*weston.socket' "$REPO/systemd/weston.service"
+	[ "$status" -ne 0 ]
+}

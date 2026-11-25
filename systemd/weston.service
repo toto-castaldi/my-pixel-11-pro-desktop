@@ -21,6 +21,12 @@ Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus
 # leaves that environment alone: hyprland.lua exports the session
 # variables and ExecStopPost removes them (core_session_env_vars).
 Environment=HYPRLAND_NO_SD_VARS=1
+# weston.socket is masked, but it stays active if the stock Weston ran
+# earlier in this boot, and after a daemon-reload it no longer listens on
+# wayland-0. Stopped here (this unit does not require it), it starts again
+# with the stock Weston unit after ./install.sh --session weston and
+# serves wayland-0, the socket of the clipboard shared with Android.
+ExecStartPre=-/usr/bin/systemctl --user --no-block stop weston.socket
 ExecStart=%h/.local/libexec/my-pixel-11-pro-desktop/start-session
 ExecStopPost=/usr/bin/systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE
 # Remove the alias wayland-0 -> Hyprland socket of the shared clipboard
