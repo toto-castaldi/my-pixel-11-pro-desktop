@@ -7,3 +7,6 @@ waybar
 fuzzel
 fonts-dejavu-core
 dbus-bin
+mako-notifier
+libnotify-bin
+swaybg

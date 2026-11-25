@@ -1,0 +1,10 @@
+# mako configuration, linked into ~/.config/mako/config by install.sh
+# (design/desktop).
+font=DejaVu Sans 11
+background-color=#1b263bee
+text-color=#e6e6e6
+border-color=#33ccff
+border-size=2
+border-radius=6
+default-timeout=5000
+anchor=top-right
