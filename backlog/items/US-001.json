@@ -6,7 +6,7 @@
   "module": "MOD-002",
   "type": "User Story",
   "priority": "P0",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "us/US-001-hyprland-al-posto-di-weston",
   "dependencies": [
     "TEC-002",
@@ -32,5 +32,8 @@
   ],
   "remarks": [
     "Criteri 5-7 aggiornati con le raccomandazioni di SPIKE-002 (docs/spikes/SPIKE-002-avvio-aggiornamenti.md)."
-  ]
+  ],
+  "outcome": "Consegnati systemd/weston.service (override utente) e systemd/start-session.sh, che avvia /usr/bin/start-hyprland o, se manca, Weston con il comando dell'unità di sistema (scelta in core_session_command, test bats). install.sh installa hyprland da trixie-backports, xwayland e foot, collega unità e script, maschera weston.socket in modo idempotente e ricarica systemd solo se serve. Osservato via log e comandi sulla VM: install.sh eseguito due volte (il primo giro ha salvato il vecchio override in .bak, il secondo ha stampato 'Nessuna modifica'); sha256 dei file di REQ-NFR-002 invariati, anche dopo i riavvii; systemctl --user status weston con start-hyprland in esecuzione; hyprctl monitors con CrosvmDisplay; log di Hyprland con renderer zink su Vulkan (PowerVR); hyprctl clients con foot (Wayland) e XEyes (xwayland: 1); con start-hyprland simulato assente (MPD_START_HYPRLAND in un drop-in temporaneo) Weston parte sul DRM con renderer zink. Corretto un bug emerso nella prova: WAYLAND_DISPLAY ereditato dalla sessione precedente faceva avviare Weston annidato, ora lo script lo toglie. Riavvio dall'app Terminal (boot delle 14:23:59 UTC, nessuna ssh prima): client ttyd dell'app, systemd-run della sessione tty1, weston.service avviato come Hyprland ('Avvio Hyprland'), NRestarts=0. Verifica visiva: solo l'utente ha confermato a vista Hyprland sul display dopo il riavvio dall'app; il ripiego su Weston l'ho visto io in uno screenshot via adb, poi cancellato. Limite noto: dopo un reboot dall'interno della VM (sudo systemctl reboot) l'app non ricollega ttyd e nessuna sessione grafica parte finché droid non apre una shell interattiva; vale anche per Weston senza override, e per ora non c'è un item. Gate verde sulla VM.",
+  "changelog": "Added: il display del Terminal avvia Hyprland al posto di Weston, con ripiego su Weston se Hyprland manca",
+  "closed_at": "2026-11-25"
 }
