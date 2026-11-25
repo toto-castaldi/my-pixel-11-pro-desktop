@@ -5,7 +5,7 @@
   "epic": "EPIC-001",
   "type": "Task",
   "priority": "P0",
-  "status": "In Progress",
+  "status": "Done",
   "branch": "task/TEC-003-adozione-template-4-4-0",
   "dependencies": [],
   "design_references": [
@@ -20,5 +20,7 @@
     "Process version di docs/PROCESS.md vale 4.4.0 e backlog template-check non mostra più l'avviso di aggiornamento.",
     "backlog check passa e i riferimenti PROCESS §N degli item esistenti restano validi.",
     "Le righe già presenti sotto [Unreleased] in CHANGELOG.md restano dove sono (verranno spostate da close-version)."
-  ]
+  ],
+  "outcome": "Adottata la release v4.4.0 di agile-project-template: copiati invariati docs/PROCESS.md, docs/PROCESS-PARALLEL.md, docs/process/backlog.md, docs/process/release.md, .agents/tools/backlog.py, le skill add-item, close-version, finish-task, kickoff, merge-task, orchestrate, .agents/skills/backlog-overlay/hooks/register.tsx e .pi/extensions/backlog/index.ts (diff -rq con la release: nessuna differenza in .agents/ e .pi/; docs/process/git.md, docs/process/docs.md e start-task erano già identici). AGENTS.md §0 aggiornato a mano come da release notes. Process version 4.4.0; backlog template-check: 'process version 4.4.0 is the latest release'; backlog check OK; i riferimenti PROCESS §3, §4, §6, §7 degli item restano validi (numerazione invariata). CHANGELOG.md non toccato: la riga sotto [Unreleased] resta lì per close-version. Nessuna voce di changelog: cambio di processo, non di prodotto. Sulla VM (utente droid): ./scripts/gate.sh superato (shellcheck pulito, Hyprland --verify-config ok, bats 14/14, 'Quality gate superato.'); ./install.sh eseguito due volte, entrambe 'Nessuna modifica'; file di REQ-NFR-002 (activate_display.sh, enable_display, enable_gfxstream, weston.service, weston.socket) invariati secondo sha256sum prima e dopo.",
+  "closed_at": "2026-11-25"
 }
