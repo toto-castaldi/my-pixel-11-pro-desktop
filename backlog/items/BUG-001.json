@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "Bug",
   "priority": "P0",
-  "status": "Todo",
+  "status": "In Progress",
+  "branch": "fix/BUG-001-ritorno-weston-wayland-display",
   "dependencies": [
     "US-002"
   ],
