@@ -3,3 +3,7 @@
 # Gli item successivi aggiungono qui i pacchetti del desktop.
 xwayland
 foot
+waybar
+fuzzel
+fonts-dejavu-core
+dbus-bin
