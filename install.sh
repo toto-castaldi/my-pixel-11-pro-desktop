@@ -17,6 +17,7 @@ session_weston() {
 	effects_unlink "$HOME" .config/systemd/user/weston.socket /dev/null
 	effects_reload_units
 	effects_forget_session_env
+	effects_forget_agent_socket "$REPO_DIR"
 
 	if [ "$EFFECTS_CHANGES" -eq 0 ]; then
 		effects_log "Nessuna modifica: la sessione è già Weston."

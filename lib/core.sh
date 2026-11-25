@@ -184,3 +184,58 @@ core_unlink_action() {
 		*) echo "keep" ;;
 	esac
 }
+
+# Name of the fixed Wayland socket used by the guest agent
+# linux_vm_manager of the Terminal app for the clipboard shared with
+# Android (REQ-DSK-005).
+core_agent_socket() {
+	echo "wayland-0"
+}
+
+# Decide how to make the agent socket an alias of the compositor socket.
+#   kind:    what is at $XDG_RUNTIME_DIR/wayland-0 now: "missing", "link",
+#            "socket" or "file" (any other entry)
+#   current: the link destination when kind is "link"
+#   wanted:  the compositor socket ($WAYLAND_DISPLAY of Hyprland)
+#   alive:   "yes" when a compositor holds wayland-0.lock
+# Prints "skip" (nothing to do), "link" (create the link) or "replace"
+# (remove the entry, then create the link). A socket with a live
+# compositor and any other kind of entry are never touched.
+core_agent_socket_action() {
+	local kind="$1" current="$2" wanted="$3" alive="$4"
+	if [ -z "$wanted" ] || [ "$wanted" = "$(core_agent_socket)" ]; then
+		echo "skip"
+		return 0
+	fi
+	case "$kind" in
+		missing) echo "link" ;;
+		link)
+			if [ "$current" = "$wanted" ]; then
+				echo "skip"
+			else
+				echo "replace"
+			fi
+			;;
+		socket)
+			if [ "$alive" = "yes" ]; then
+				echo "skip"
+			else
+				echo "replace"
+			fi
+			;;
+		*) echo "skip" ;;
+	esac
+}
+
+# Decide what to do with the agent socket when the session stops or the
+# override is removed: only a link (the alias created by the project) is
+# removed, so no alias is left towards a socket that no longer exists.
+# Prints "remove" or "skip".
+core_agent_socket_unlink_action() {
+	local kind="$1"
+	if [ "$kind" = "link" ]; then
+		echo "remove"
+	else
+		echo "skip"
+	fi
+}

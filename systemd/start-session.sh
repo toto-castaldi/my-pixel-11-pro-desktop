@@ -24,4 +24,8 @@ fi
 # WAYLAND_DISPLAY and DISPLAY in the user manager environment, and with
 # them Weston would try to run nested and fail.
 unset WAYLAND_DISPLAY DISPLAY
+# Hyprland links wayland-0 to its own socket once started (hyprland.lua);
+# a link left by a previous session would point to a closed socket and
+# would keep Weston from opening wayland-0.
+"$REPO_DIR/systemd/session-socket.sh" unlink
 exec "${cmd[@]}"

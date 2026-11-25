@@ -149,3 +149,14 @@ effects_reload_units() {
 	effects_log "Ricarico le unità systemd utente"
 	systemctl --user daemon-reload
 }
+
+# Remove the alias wayland-0 -> Hyprland socket of the shared clipboard
+# (systemd/session-socket.sh). After the override is removed the stock
+# unit runs on stop, without the ExecStopPost that removes it, and Weston
+# must find wayland-0 free. Runtime state only: not counted as a change.
+effects_forget_agent_socket() {
+	local repo="$1" line
+	"$repo/systemd/session-socket.sh" unlink | while IFS= read -r line; do
+		effects_log "$line"
+	done
+}

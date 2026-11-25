@@ -4,6 +4,7 @@
 # Gli item successivi aggiungono qui i propri dotfile.
 systemd/weston.service .config/systemd/user/weston.service
 systemd/start-session.sh .local/libexec/my-pixel-11-pro-desktop/start-session
+systemd/session-socket.sh .local/libexec/my-pixel-11-pro-desktop/session-socket
 config/hypr/hyprland.lua .config/hypr/hyprland.lua
 config/waybar/config.jsonc .config/waybar/config.jsonc
 config/waybar/style.css .config/waybar/style.css

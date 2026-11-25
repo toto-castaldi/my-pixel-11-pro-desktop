@@ -35,6 +35,10 @@ local shotArea = shotFile .. ' && g="$(slurp)" && grim -g "$g" "$f"' .. shotDone
 -- entry and wl-copy puts it back in the clipboard.
 local clipStore   = "wl-paste --type text --watch cliphist store"
 local clipHistory = "cliphist list | fuzzel --dmenu --prompt 'Clipboard: ' | cliphist decode | wl-copy"
+-- Clipboard shared with Android: the Terminal app agent uses wayland-0,
+-- Hyprland opens wayland-1; the script links the first to the second
+-- (design/session). Run at every start, also after a watchdog restart.
+local agentSocket = "systemd-cat -t session-socket ~/.local/libexec/my-pixel-11-pro-desktop/session-socket link"
 
 -------------------
 ---- AUTOSTART ----
@@ -47,6 +51,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd(wallpaper)
     hl.exec_cmd("mako")
     hl.exec_cmd(clipStore)
+    hl.exec_cmd(agentSocket)
 end)
 
 hl.env("XCURSOR_SIZE", "24")

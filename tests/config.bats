@@ -129,3 +129,19 @@ setup() {
 	grep -qx 'Environment=HYPRLAND_NO_SD_VARS=1' "$unit"
 	grep -qx "ExecStopPost=/usr/bin/systemctl --user unset-environment $(core_session_env_vars)" "$unit"
 }
+
+@test "shared clipboard: wayland-0 follows Hyprland and is removed when the session stops (US-007)" {
+	run core_list_entries <"$REPO/config/links.list"
+	[[ "$output" == *"systemd/session-socket.sh .local/libexec/my-pixel-11-pro-desktop/session-socket"* ]]
+	grep -q 'hl.exec_cmd(agentSocket)' "$HYPR"
+	grep -q 'my-pixel-11-pro-desktop/session-socket link"' "$HYPR"
+	grep -qx 'ExecStopPost=-%h/.local/libexec/my-pixel-11-pro-desktop/session-socket unlink' "$REPO/systemd/weston.service"
+	grep -q 'session-socket.sh" unlink' "$REPO/systemd/start-session.sh"
+	grep -q 'effects_forget_agent_socket' "$REPO/install.sh"
+}
+
+@test "weston.service: the stale weston.socket is stopped, so the stock Weston gets wayland-0 back (US-007)" {
+	grep -qx 'ExecStartPre=-/usr/bin/systemctl --user --no-block stop weston.socket' "$REPO/systemd/weston.service"
+	run grep -E '^(Requires|BindsTo|Wants)=.*weston.socket' "$REPO/systemd/weston.service"
+	[ "$status" -ne 0 ]
+}
