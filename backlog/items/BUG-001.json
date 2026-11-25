@@ -6,7 +6,8 @@
   "module": "MOD-002",
   "type": "Bug",
   "priority": "P0",
-  "status": "Todo",
+  "status": "Done",
+  "branch": "fix/BUG-001-ritorno-weston-wayland-display",
   "dependencies": [
     "US-002"
   ],
@@ -27,5 +28,8 @@
     "Dopo l'arresto della sessione Hyprland l'ambiente del manager systemd utente non contiene WAYLAND_DISPLAY né DISPLAY lasciati da Hyprland, anche quando la sessione si ferma per un riavvio o per l'uscita con Ctrl+Alt+Q.",
     "Test di regressione bats sulla parte pura della correzione (per esempio i comandi o le righe dell'unità che puliscono l'ambiente all'arresto).",
     "README e design/session descrivono il comportamento corretto."
-  ]
+  ],
+  "outcome": "Causa: all'uscita Hyprland (CCompositor::cleanEnvironment) esegue systemctl --user unset-environment e poi dbus-update-activation-environment --systemd WAYLAND_DISPLAY..., che rimette WAYLAND_DISPLAY nel manager utente. Correzione: systemd/weston.service imposta HYPRLAND_NO_SD_VARS=1 (Hyprland non tocca più l'ambiente del manager; l'export resta in hyprland.lua) e con ExecStopPost toglie WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE (core_session_env_vars, usata anche da install.sh --session weston). Verificato sulla VM con l'utente al monitor: restart con la nuova unità -> Hyprland; --session weston + restart -> Weston su DRM, variabili assenti dopo l'arresto; --session hyprland + restart -> Hyprland; uscita con Ctrl+Alt+Q premuto dall'utente e poi con il comando del bind via hyprctl (hl.dsp.exit) -> variabili assenti, start weston riporta Hyprland; riavvio -> Hyprland. Al riavvio l'ambiente del manager riparte da zero; la pulizia di ExecStopPost a quell'arresto non è stata osservata nel journal (journal utente non persistente). Dopo 'sudo reboot' dato dentro la VM l'app non ha rifatto il login (display nero con residui); riavviando la VM dall'app Hyprland è partito subito: annotato in README e design/session. Gate superato sulla VM (shellcheck, Hyprland --verify-config, bats 43 test); install.sh eseguito due volte: Nessuna modifica; file di REQ-NFR-002 con mtime precedente al lavoro.",
+  "changelog": "Fixed: il ritorno a Weston con ./install.sh --session weston funziona anche con la sessione Hyprland attiva",
+  "closed_at": "2026-11-25"
 }

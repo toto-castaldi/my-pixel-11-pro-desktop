@@ -95,6 +95,11 @@ setup() {
 	[ "$output" = "/usr/bin/weston --modules=systemd-notify.so --xwayland --continue-without-input" ]
 }
 
+@test "session_env_vars: the variables Hyprland leaves in the user manager" {
+	run core_session_env_vars
+	[ "$output" = "WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE" ]
+}
+
 @test "mask_action: missing unit is masked" {
 	run core_mask_action missing ""
 	[ "$output" = "mask" ]

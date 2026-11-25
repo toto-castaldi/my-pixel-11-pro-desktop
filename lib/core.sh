@@ -143,6 +143,15 @@ core_session_command() {
 	fi
 }
 
+# Variables a Hyprland session leaves in the systemd user manager
+# environment, one line, separated by blanks. Removed when the session
+# stops (ExecStopPost of systemd/weston.service) and by
+# "./install.sh --session weston": with WAYLAND_DISPLAY left there the
+# stock Weston unit would run nested on a socket that no longer exists.
+core_session_env_vars() {
+	echo "WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE"
+}
+
 # Decide how to mask a user unit, given what is at its path now
 # (kind and current as in core_link_action). Prints "skip" (already
 # masked), "mask" (create the link to /dev/null) or "backup" (move the

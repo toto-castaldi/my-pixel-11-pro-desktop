@@ -45,7 +45,7 @@ Lo script installa Hyprland da `trixie-backports`, collega l'unità `~/.config/s
 systemctl --user restart weston
 ```
 
-oppure riavviare la VM. Se Hyprland non è installato, la stessa unità avvia Weston, così il display non resta vuoto. Il log della sessione si legge con `journalctl --user -u weston`.
+oppure riavviare la VM dall'app Terminal: dopo un `sudo reboot` dato dentro la VM l'app non riapre la sessione e il display resta nero finché non si riavvia la VM dall'app. Dopo un riavvio conviene aspettare un po' prima di aprire il display, altrimenti l'app può bloccarsi. Se Hyprland non è installato, la stessa unità avvia Weston, così il display non resta vuoto. Il log della sessione si legge con `journalctl --user -u weston`.
 
 `./install.sh --help` mostra l'uso senza modificare il sistema. Lo script è rieseguibile: una seconda esecuzione stampa `Nessuna modifica` e non crea backup.
 
@@ -113,6 +113,8 @@ Il comando toglie l'unità `~/.config/systemd/user/weston.service` del progetto 
 ```bash
 systemctl --user restart weston
 ```
+
+Il comando toglie anche `WAYLAND_DISPLAY` e `DISPLAY` di Hyprland dall'ambiente dei servizi utente, che altrimenti farebbero partire Weston dentro un compositor che non c'è più. La sessione Hyprland li toglie da sola quando si ferma, anche per un riavvio o per l'uscita con Ctrl+Alt+Q.
 
 Per tornare a Hyprland:
 
