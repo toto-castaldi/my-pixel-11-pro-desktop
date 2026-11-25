@@ -6,7 +6,7 @@ L'app Terminal esegue una VM Debian 13 (trixie, aarch64) e ne mostra il display 
 
 ## Stato
 
-In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione non esiste ancora; il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
+In sviluppo: versione **v0.1.0** in preparazione. Lo script di installazione esiste come struttura di base: gli elenchi di pacchetti e dotfile sono ancora vuoti e vengono riempiti dagli item successivi. Il piano di lavoro è in `backlog/` e si legge con `python3 .agents/tools/backlog.py status`.
 
 ## Prerequisiti
 
@@ -26,6 +26,35 @@ cd my-pixel-11-pro-desktop
 
 e poi riaprire il display dall'app Terminal.
 
+`./install.sh --help` mostra l'uso senza modificare il sistema. Lo script è rieseguibile: una seconda esecuzione stampa `Nessuna modifica` e non crea backup.
+
+## Struttura del repository
+
+| Cartella | Contenuto |
+| --- | --- |
+| `install.sh` | script di installazione |
+| `lib/` | funzioni dello script: `core.sh` (pure, testabili) e `effects.sh` (apt e filesystem) |
+| `packages/` | elenchi dei pacchetti Debian, un pacchetto per riga; quelli da `trixie-backports` in file `*.backports.list` |
+| `config/` | dotfile del desktop; `config/links.list` elenca i link da creare sotto `$HOME` (`<file nel repo> <destinazione relativa a $HOME>`) |
+| `systemd/` | unità systemd utente della sessione grafica |
+| `tests/` | test unitari bats |
+| `scripts/` | strumenti di sviluppo (`gate.sh`) |
+
+I file sostituiti da un link vengono salvati accanto all'originale come `<file>.bak-<data>`.
+
 ## Sviluppo
 
-Requisiti in `docs/requirements/`, design in `docs/design/`. Il quality gate (shellcheck, `Hyprland --verify-config`, bats) è descritto in `AGENTS.md` §6.
+Requisiti in `docs/requirements/`, design in `docs/design/`.
+
+Preparazione, sulla VM:
+
+```bash
+sudo apt-get install -y shellcheck bats
+sudo apt-get install -y -t trixie-backports hyprland
+```
+
+Quality gate (shellcheck, `Hyprland --verify-config`, bats), con un solo comando:
+
+```bash
+./scripts/gate.sh
+```

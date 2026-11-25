@@ -1,0 +1,4 @@
+# Dotfile collegati da install.sh con link simbolici, uno per riga:
+# <file nel repository> <destinazione relativa a $HOME>
+# Esempio: config/foot/foot.ini .config/foot/foot.ini
+# Gli item successivi aggiungono qui i propri dotfile.

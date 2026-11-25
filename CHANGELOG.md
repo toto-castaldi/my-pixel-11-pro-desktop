@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Added
 
 - Documentazione di base del progetto: requisiti, design, backlog della v0.1.0 e regole per gli agenti (TEC-001).
+- Struttura del repository, `install.sh` con `--help`, quality gate unico `scripts/gate.sh` e test unitari bats (TEC-002).
 
 ### Changed
 
